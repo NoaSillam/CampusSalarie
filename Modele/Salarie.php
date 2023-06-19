@@ -170,7 +170,7 @@ public function ajouterSalarie($nom, $prenom, $mail, $pole, $statut)
    
     //$apiKey = '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';
     //$apiKey = "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";
-    $apiKey = "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";
+    $apiKey = "--";
     $email = new SendGrid\Mail\Mail(); 
     $email->setFrom("noasillam@gmail.com");
     $email->setSubject("Première connexion au campus");
