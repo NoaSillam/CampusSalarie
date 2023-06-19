@@ -11,6 +11,12 @@ class DocVideo extends Modele
         $documents = $this->executerRequete($sql , array( $idSalarie));
         return $documents;
     }
+    public function getThemes()
+    {
+        $sql = 'select * from theme';
+        $themes = $this->executerRequete($sql);
+        return $themes;
+    }
     public function getDocumentSalarie()
     {
         $sql = 'select docvideo.idDocVideo, docVideo.libelle, docVideo.lien, docVideo.type, docVideo.description, docVideo.dateCreation, salarie.id, salarie.nom, prestataire.id, prestataire.nomPrestataire from docVideo inner join prestataire on docVideo.idPrestataire = prestataire.id inner join salarie on docVideo.idSalarie = salarie.id where type = "document"';
@@ -94,16 +100,16 @@ class DocVideo extends Modele
     }
     public function getVideoAccueilTout()
     {
-        $sql = 'select * from docVideo where type = "video"';
+        $sql = 'select * from docVideo where type = "video" order by dateParution desc';
         $video = $this->executerRequete($sql);
         return $video;
     }
 
    
-    public function modifierVideo( $libelle, $lien, $description, $duree, $dateParution, $idDocument)
+    public function modifierVideo( $libelle, $lien, $description, $dateParution, $idDocument)
     {
-        $sql = 'update docVideo set libelle = ?, lien = ?, description = ?, duree = ?,  dateParution = ? where idDocVideo = ?';
-        $this->executerRequete($sql, array( $libelle, $lien, $description, $duree, $dateParution, $idDocument ));
+        $sql = 'update docVideo set libelle = ?, lien = ?, description = ?, dateParution = ? where idDocVideo = ?';
+        $this->executerRequete($sql, array( $libelle, $lien, $description, $dateParution, $idDocument ));
     }
     public function supprimerVideo($idVideo)
     {
@@ -118,29 +124,53 @@ class DocVideo extends Modele
     }
     public function getDocumentAccueilTout()
     {
-        $sql = 'select * from docVideo where type = "document"';
+        $sql = 'select * from docVideo where type = "document" order by dateParution desc';
         $document = $this->executerRequete($sql);
         return $document;
     }
-    public function ajouterDocument($idDocument, $libelle, $lien, $description, $dateParution, $idSalarie, $idPrestataire, $idTheme)
+    public function getNombreDocuments() {
+        $sql = 'select max(idDocVideo) as nbDocuments from docVideo';
+        $resultat = $this->executerRequete($sql);
+         $nbDocuments = $resultat->fetch(PDO::FETCH_ASSOC)['nbDocuments'];
+         return $nbDocuments;
+      }
+    public function ajouterDocument($libelle, $lien, $description, $dateParution, $format, $imgApercu, $idTheme)
     {
-        $sql = 'insert into docVideo(idDocVideo, libelle, type, lien, description, dateParution, idSalarie, idPrestataire) values(?,?,"document",?,?,?,?,?)';
+        $sql = 'insert into docVideo(idDocVideo, libelle, type, lien, description, dateParution, format, imgApercu, dateCreation) values(?,?,"document",?,?,?,?,?,NOW())';
+
         $sql1 = 'insert into themeDoc(idTheme, idDocVideo) values(?,?)';
-        $this->executerRequete($sql, array($idDocument, $libelle, $lien, $description, $dateParution, $idSalarie, $idPrestataire));
-        $this->executerRequete($sql1, array($idTheme, $idDocument));
+        $nbDocuments = $this->getNombreDocuments();
+        $idDocument = $nbDocuments +1;
+        $this->executerRequete($sql, array($idDocument, $libelle, $lien, $description, $dateParution, $format, $imgApercu));
+        foreach ($idTheme as $idThem) {
+            $this->executerRequete($sql1, array($idThem, $idDocument));
+        }
         
     }
-    public function ajouterVideo($idVideo, $libelle, $lien, $description, $duree, $dateParution, $idSalarie, $idPrestataire, $idTheme)
+    public function getNombreVideos() {
+        $sql = 'select max(idDocVideo) as nbVideos from docVideo';
+        $resultat = $this->executerRequete($sql);
+         $nbVideos = $resultat->fetch(PDO::FETCH_ASSOC)['nbVideos'];
+         return $nbVideos;
+      }
+     
+    public function ajouterVideo( $libelle, $lien, $description, $dateParution, $idTheme, $imgApercu)
     {
-        $sql = 'insert into docVideo(idDocVideo, libelle, type, lien, description, format, duree, dateParution, dateCreation, idSalarie, idPrestataire) values(?,?,"video",?,?,"youtube",?,?,NOW(),?,?)';
+        $sql = 'insert into docVideo(idDocVideo, libelle, type, lien, description, format, dateParution, dateCreation, imgApercu) values(?,?,"video",?,?,"youtube",?,NOW(),?)';
         $sql1 = 'insert into themeDoc(idTheme, idDocVideo) values(?,?)';
-        $this->executerRequete($sql, array($idVideo, $libelle, $lien, $description, $duree, $dateParution, $idSalarie, $idPrestataire));
-        $this->executerRequete($sql1, array($idTheme, $idVideo));
+        $nbVideos = $this->getNombreVideos();
+        $idVideo = $nbVideos + 1;
+        $this->executerRequete($sql, array($idVideo, $libelle, $lien, $description, $dateParution, $imgApercu));
+        
+        // $this->executerRequete($sql1, array($idTheme, $idVideo));
+        foreach ($idTheme as $idThem) {
+            $this->executerRequete($sql1, array($idThem, $idVideo));
+        }
     }
-    public function modifierDocument( $libelle, $lien, $description, $dateParution, $idDocument)
+    public function modifierDocument( $libelle, $lien, $description, $dateParution, $imgApercu, $format, $idDocument)
     {
-        $sql = 'update docVideo set libelle = ?, lien = ?, description = ?, dateParution = ? where idDocVideo = ?';
-        $this->executerRequete($sql, array( $libelle, $lien, $description, $dateParution, $idDocument ));
+        $sql = 'update docVideo set libelle = ?, lien = ?, description = ?, dateParution = ?, imgApercu=?, format=? where idDocVideo = ?';
+        $this->executerRequete($sql, array( $libelle, $lien, $description, $dateParution, $imgApercu, $format, $idDocument ));
     }
     public function supprimerDocument($idDocument)
     {

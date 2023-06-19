@@ -26,14 +26,14 @@ class ControleurDocument
         $vue = new Vue("Document");
         $vue->generer(array( 'salarie'=>$salarie, 'documents'=>$documents));
     }
-    public function documentAjouter()
-    { 
-        $documents = $this->document->getDocumentSalarie();
-        $docus = $this->document->getDocumentSalarie2();
-        // $vue = new Vue("Accueil", "index.php");
-        $vue = new Vue("DocumentAjouter");
-         $vue->generer(array('documents'=> $documents, 'docus'=>$docus));
-    }
+    // public function documentAjouter()
+    // { 
+    //     $documents = $this->document->getDocumentSalarie();
+    //     $docus = $this->document->getDocumentSalarie2();
+    //     // $vue = new Vue("Accueil", "index.php");
+    //     $vue = new Vue("DocumentAjouter");
+    //      $vue->generer(array('documents'=> $documents, 'docus'=>$docus));
+    // }
     // public function documentAjouter2()
     // { 
     //     $docus = $this->document->getDocumentSalarie2();
@@ -81,22 +81,30 @@ class ControleurDocument
         $vue = new Vue("DocumentModifier");
         $vue->generer(array('document'=>$document));
     }
-    public function document($idDocument, $libelle, $lien, $description, $dateParution, $idSalarie, $idPrestataire, $idTheme)
+    public function documentAjouter()
     {
-        $this->document->ajouterDocument($idDocument, $libelle, $lien, $description, $dateParution, $idSalarie, $idPrestataire, $idTheme);
-        header("location:index.php");
-        // $this->prestaSalarie($idSalarie);
+       $themes = $this->document->getThemes();
+       $vue = new Vue("DocumentAjouter");
+       $vue->generer(array('themes'=>$themes));
+
+
     }
-    public function modifDocument($libelle, $lien, $description, $dateParution, $idDocument)
+    public function document($libelle, $lien, $description, $dateParution, $format, $imgApercu, $idTheme)
+{
+         $this->document->ajouterDocument($libelle, $lien, $description, $dateParution, $format, $imgApercu, $idTheme);
+        header("location:index.php");
+  
+    }
+    public function modifDocument($libelle, $lien, $description, $dateParution, $imgApercu, $format, $idDocument)
     {
-        $this->document->modifierDocument($libelle, $lien, $description, $dateParution, $idDocument);
+        $this->document->modifierDocument($libelle, $lien, $description, $dateParution, $imgApercu, $format, $idDocument);
         header("location:index.php");
     //     $this->documents($idDocument);
     }
     public function deleteDocument($idDocument)
     {
         $this->document->supprimerDocument($idDocument);
-        header("location:index.php");
+        header("location:index.php?documentAccueil");
         // $this->documents($idDocument);
     }
 }

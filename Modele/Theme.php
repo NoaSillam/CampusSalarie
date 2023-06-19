@@ -15,8 +15,20 @@ class Theme extends Modele
         $sql = 'select * from theme where idThemeParent is null ';
         $themesId = $this->executerRequete($sql);
         return $themesId;
+    } 
+    public function getVideoTheme($idTheme)
+    {
+        $sql = 'select docVideo.idDocVideo, docVideo.libelle, docVideo.type, docVideo.lien, docVideo.description, docVideo.format, docVideo.dateParution from docVideo inner join themeDoc on docVideo.idDocVideo = themeDoc.idDocVideo where type = "video" and idTheme = ? order by dateParution desc';
+        $videoDoc = $this->executerRequete($sql, array($idTheme));
+        return $videoDoc;
     }
-
+    public function getDocumentTheme($idTheme)
+    {
+        $sql = 'select docVideo.idDocVideo, docVideo.libelle, docVideo.type, docVideo.lien, docVideo.description, docVideo.format, docVideo.dateParution from docVideo inner join themeDoc on docVideo.idDocVideo = themeDoc.idDocVideo where type = "document" and idTheme = ? order by dateParution desc';
+        $videoDoc = $this->executerRequete($sql, array($idTheme));
+        return $videoDoc;
+    }
+    
     // public function getTheme($idPrestataire)
     // {
     //     $sql = 'select * from prestataire where id = ?';
@@ -111,10 +123,10 @@ class Theme extends Modele
         $sql = 'update theme set libelle = ?, descriptif = ?, img = ? where id = ?';
         $this->executerRequete($sql, array($libelle, $descriptif, $img, $idTheme));
     }
-    public function modifierSousTheme($libelle, $descriptif, $img, $idTheme, $idThemeParent)
+    public function modifierSousTheme($libelle, $descriptif, $img, $idTheme)
     {
-        $sql = 'update theme set libelle = ?, descriptif = ?, img = ?, idThemeParent = ? where id = ?';
-        $this->executerRequete($sql, array($libelle, $descriptif, $img, $idThemeParent, $idTheme));
+        $sql = 'update theme set libelle = ?, descriptif = ?, img = ? where id = ?';
+        $this->executerRequete($sql, array($libelle, $descriptif, $img, $idTheme));
     }
     public function supprimerTheme($idTheme)
     {

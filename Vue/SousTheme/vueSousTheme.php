@@ -5,18 +5,39 @@
     width: 50%;
     margin-left: 25%;
  }
+ .hidden{
+    visibility: hidden;
+ }
+ .supprimer{
+    /* margin-top: -75%; */
+    width: 100%;
+ }
+ td{
+    color: black;
+ }
+ p{
+    color: black;
+ }
 </style>
-<a href="index.php?action=SousThmeAjouter"><input type="submit" class="btn btn-primary" value="Ajouter un sous-theme"></a>
+<br>
+<h1 style="text-align: center;">Liste des Sous-thèmes</h1>
+
+<br>
+<br>
 <!-- <a href="index.php?action=themesAjouter"><input type="submit" class="btn btn-primary" value="Ajouter un theme"></a> -->
-<h1>Liste des Sous Themes</h1>
-<table class="table">
+<a href="index.php?action=SousThmeAjouter"><input type="submit" class="btn btn-success" style="width: 20%; float: left;" value="Ajouter un sous-thème"></a>
+<br>
+<br>
+<table class="table table-bordered align-middle">
     <tbody>
     <tr>
-        <th>Libelle</th>
-        <th>Descriptif</th>
-        <th>Image</th>
-        <th>Modfier</th>
-        <th>Supprimer</th>
+        <th style="text-align: center;">Libellé</th>
+        <th style="text-align: center;">Descriptif</th>
+        <th style="text-align: center;">Image</th>
+        <th style="text-align: center;">Vidéo</th>
+        <th style="text-align: center;">Document</th>
+        <th style="text-align: center;">Modfier</th>
+        <th style="text-align: center;">Supprimer</th>
     </tr>
 
         <tr>
@@ -25,10 +46,27 @@ foreach($sousThemes as $sousThm):
 ?>
 
    <td><?= $sousThm['libelle'] ?> </td>
-    <td><?= $sousThm['descriptif'] ?></td>
+   <td>
+   <?php 
+      $description = strip_tags( htmlspecialchars_decode($sousThm['descriptif'])); // Supprime les balises HTML de la description
+      if (strlen($description) > 255) {
+         $description = substr($description, 0, 255);
+         $last_space = strrpos($description, ' ');
+         if ($last_space !== false) {
+            $description = substr($description, 0, $last_space) . '...';
+         } else {
+            $description .= '...';
+         }
+      }
+      echo $description;
+   ?>
+</td>
+   
     <td><img width="300" height="200" src="image/<?= $sousThm['img'] ?>"></td>
-    <td><a  href="<?= "index.php?action=sousThmModifier&idThemeParent=". $sousThm['id']?>">  <input type="submit" class="btn btn-primary" value="Modifier"> </a></td>
-    <form action="index.php?action=deleteTheme" method="post"><td>  <input type="text" name="idTheme" value="<?= $sousThm['id'] ?>" readonly="readonly" /> <input type="submit" class="btn btn-danger" value="Supprimer" /></td></form>
+    <td> <a href="<?= "index.php?action=themeVideo&idTheme=".$sousThm['id']?>" > <input type="submit" style="width: 100%;" class="btn btn-primary" value="Vidéo" /></a></td>
+    <td> <a href="<?= "index.php?action=themeDocument&idTheme=".$sousThm['id']?>" > <input type="submit" style="width: 100%;" class="btn btn-primary" value="Document" /></a></td>
+    <td><a  href="<?= "index.php?action=sousThmModifier&idThemeParent=". $sousThm['id']?>">  <input type="submit" class="btn btn-info" style="width: 100%;" value="Modifier"> </a></td>
+    <form action="index.php?action=deleteTheme" method="post"><td>  <input type="hidden" class="hidden" name="idTheme" value="<?= $sousThm['id'] ?>" readonly="readonly" /> <input type="submit" class="btn btn-danger supprimer" value="Supprimer" /></td></form>
  
 
 </tr>

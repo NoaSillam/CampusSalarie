@@ -33,15 +33,15 @@ class ControleurVideo
         $vue->generer(array('video'=>$video));
 
     }
-    public function videoAjouter()
-    { 
-       // $videos = $this->video->getVideoSalarie();
-        $vids = $this->video->getVideoSalarie2();
+    // public function videoAjouter()
+    // { 
+    //    // $videos = $this->video->getVideoSalarie();
+    //     $vids = $this->video->getVideoSalarie2();
        
-        // $vue = new Vue("Accueil", "index.php");
-        $vue = new Vue("VideoAjouter");
-         $vue->generer(array( 'vids'=>$vids));
-    }
+    //     // $vue = new Vue("Accueil", "index.php");
+    //     $vue = new Vue("VideoAjouter");
+    //      $vue->generer(array( 'vids'=>$vids));
+    // }
     // public function videoAjouterSalarie()
     // { 
     //    // $videos = $this->video->getVideoSalarie();
@@ -79,11 +79,11 @@ class ControleurVideo
         $vue = new Vue("VideoAjouter");
          $vue->generer(array('salarieDocVideo'=> $salarieDocVideo));
     }
-    public function video($idVideo, $libelle, $lien, $description, $duree, $dateParution, $idSalarie, $idPrestataire, $idTheme)
+    public function video($libelle, $lien, $description, $dateParution, $idTheme, $imgApercu)
     {
-        $this->video->ajouterVideo($idVideo, $libelle, $lien, $description, $duree, $dateParution, $idSalarie, $idPrestataire, $idTheme);
+       $this->video->ajouterVideo( $libelle, $lien, $description, $dateParution, $idTheme, $imgApercu);
         header("location:index.php");
-        $this->videos($idVideo);
+        // $this->videos($idVideo);
         
     }
     public function videoModifier($idVideo)
@@ -92,19 +92,26 @@ class ControleurVideo
         $vue = new Vue("VideoModifier");
         $vue->generer(array('video'=>$video));
     }
-    
+     public function videoAjouter()
+     {
+        $themes = $this->video->getThemes();
+        $vue = new Vue("VideoAjouter");
+        $vue->generer(array('themes'=>$themes));
+
+
+     }
 
     
-    public function modifVideo($libelle, $lien, $description, $duree, $dateParution, $idVideo)
+    public function modifVideo($libelle, $lien, $description, $dateParution, $idVideo)
     {
-        $this->video->modifierVideo($libelle, $lien, $description, $duree, $dateParution, $idVideo);
+        $this->video->modifierVideo($libelle, $lien, $description, $dateParution, $idVideo);
         header("location:index.php");
         $this->videos($idVideo);
     }
     public function deleteVideo($idVideo)
     {
         $this->video->supprimerVideo($idVideo);
-        header("location:index.php");
+        header("location:index.php?action=videoAccueil");
         $this->videos($idVideo);
     }
 }

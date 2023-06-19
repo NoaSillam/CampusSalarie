@@ -4,6 +4,7 @@
 // require_once 'Modele/Salarie.php';
 // require_once 'Vue/Vue.php';
 require_once 'autoload.php';
+// require_once 'src/PHPMailer.php';
 
 
 class ControleurSalarie{
@@ -39,6 +40,13 @@ class ControleurSalarie{
         $vue->generer(array('salaries'=>$salaries));
 
     }
+    public function ModifierMdp($idSalarie)
+    {
+        $salaries = $this->salarie->getSalarieModifier($idSalarie);
+        $vue = new Vue("ModifierMdp");
+        $vue->generer(array('salaries'=>$salaries));
+
+    }
 
     
     // public function salarie($idSalarie)
@@ -60,11 +68,15 @@ class ControleurSalarie{
     //     $vue->generer(array('theme'=>$theme));
 
     // }
-    public function ajoutSalarie($nom, $prenom, $mail, $pole, $statut, $password)
+    public function ajoutSalarie($nom, $prenom, $mail, $pole, $statut)
     {
-        $this->salarie->ajouterSalarie($nom, $prenom, $mail, $pole, $statut, $password);
+        $this->salarie->ajouterSalarie($nom, $prenom, $mail, $pole, $statut);
         header("location:index.php?action=salaries");
-       // $this->prestataire($idPrestataire);
+    }
+    public function modifMdp($idSalarie, $password)
+    {
+        $this->salarie->modifierMdp($idSalarie, $password);
+        header("location:index.php?action=cnx1");
     }
     public function modifSalarie($idSalarie, $nom, $prenom, $mail, $pole)
     {

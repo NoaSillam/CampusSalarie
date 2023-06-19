@@ -15,6 +15,12 @@ class Mission extends Modele{
     //     $missions = $this->executerRequete($sql, array($idMission));
     //     return $missions;
     // }
+    public function getNombreMissions() {
+        $sql = 'select count(*) as nbMissions from mission ';
+        $resultat = $this->executerRequete($sql);
+         $nbMissions = $resultat->fetch(PDO::FETCH_ASSOC)['nbMissions'];
+         return $nbMissions;
+      }
     public function getMission($idMission)
     {
         $sql = 'select * from mission where idMission = ? ';
@@ -23,19 +29,22 @@ class Mission extends Modele{
         
        // return $mission;
     }
-    public function ajoutMission($idMission, $titre, $annonce, $adresse, $codePostal, $ville )
+    public function ajoutMission( $titre, $annonce, $adresse, $codePostal, $ville )
     {
         $sql = 'insert into mission (idMission, titre, annonce, adresse, codePostal, ville) values (?,?,?,?,?,?);';
         $sql1 = 'insert into inscritStatut (idStatut, idMission) values (1,?)';
-        $sql2 = 'select idMission from mission order by idMission desc limit 1';
-        $this->executerRequete($sql, array($idMission, $titre, $annonce, $adresse, $codePostal, $ville));
+        // $sql2 = 'select idMission from mission order by idMission desc limit 1';
+        $nbMissions = $this->getNombreMissions();
+        $idMission = $nbMissions +1;
+        $codePostal = !empty($codePostal) ? $codePostal : 0;
+        $this->executerRequete($sql, array($idMission, $titre, $annonce, $adresse, $codePostal, $ville ));
         $this->executerRequete($sql1, array($idMission));
        // $idMission = $sql2 +1;
     }
-    public function modifMission( $titre, $annonce, $adresse, $codePostal, $ville, $idMission)
+    public function modifMission( $titre, $annonce, $idMission)
     {
-        $sql = 'update mission set titre = ?, annonce = ?, adresse = ?, codePostal = ?, ville = ? where idMission = ? ';
-        $this->executerRequete($sql, array($titre, $annonce, $adresse, $codePostal, $ville, $idMission));
+        $sql = 'update mission set titre = ?, annonce = ? where idMission = ? ';
+        $this->executerRequete($sql, array($titre, $annonce, $idMission));
     }
     // public function deleteMission($idMission)
     // {

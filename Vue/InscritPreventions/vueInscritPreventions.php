@@ -4,21 +4,30 @@
     justify-content: center;
     width: 50%;
  }
+ .hidden{
+    visibility: hidden;
+ }
+ .supprimer{
+ 
+    width: 70%;
+ }
 </style>
-
-<h1>Les Preventions</h1>
-
+<br>
+<h1 style="text-align: center;">Les Preventions</h1>
+<br>
+<br>
 <!-- <a href="index.php?action=ajoutDonateur"><input type="submit" value="valider"></a> -->
-<table class="table align-middle">
+<table class="table table-bordered align-middle">
     <tbody>
     <tr class="text-align">
-        <th>Civilite</th>
-        <th>Nom</th>
-        <th>Prenom</th>
-        <th>Mail</th>
-        <th>Date de l'inscription</th>
-        <th>Age</th>
-        <th>Modifier</th>
+        <th style="text-align: center;">Civilite</th>
+        <th style="text-align: center;">Nom</th>
+        <th style="text-align: center;">Prenom</th>
+        <th style="text-align: center;">Mail</th>
+        <th style="text-align: center;">Date de l'inscription</th>
+        <th style="text-align: center;">Age</th>
+        <th style="text-align: center;">Modifier</th>
+        <th style="text-align: center;">Supprimer</th>
 
     </tr>
     <tr>
@@ -46,8 +55,8 @@
   <td> <?= $prevention['mail'] ?> </td>
   <td> <?= $prevention['dateInscription'] ?> </td>
   <td> <?= $prevention['age'] ?> </td>
-  <td><a  href="<?= "index.php?action=PreventionModifier&idInscrit=". $prevention['id']?>"> <input type="submit" class="btn btn-primary" value="Modifier" /></a></td>
-  <form action="index.php?action=deleteInscritPrevention" method="post"><td>  <input type="text" name="idInscrit" value="<?= $prevention['id'] ?>" readonly="readonly" /> <input type="submit" class="btn btn-danger" value="Supprimer" /></td></form>
+  <td><a  href="<?= "index.php?action=PreventionModifier&idInscrit=". $prevention['id']?>"> <input type="submit" class="btn btn-info" value="Modifier" /></a></td>
+  <form action="index.php?action=deleteInscritPrevention" method="post"><td>  <input type="hidden" name="idInscrit"  value="<?= $prevention['id'] ?>" readonly="readonly" /> <input type="submit" class="btn btn-danger supprimer" value="Supprimer" /></td></form>
  
 
 

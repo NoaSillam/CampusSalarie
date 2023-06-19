@@ -15,8 +15,6 @@ class Prestataire extends Modele
         $sql = 'select * from prestataire where id = ? ';
         $prestataire = $this->executerRequete($sql, array($idPrestataire));
         return $prestataire;
-        
-       // return $mission;
     }
 
     public function getPrestataire($idPrestataire)
@@ -31,16 +29,16 @@ class Prestataire extends Modele
             throw new Exception("Aucun prestataire ne correspond a l'identififiant '$idPrestataire'");
         }
     }
-    public function ajouterPrestataire( $nomPrestataire, $logo, $adresse, $codePostal)
+    public function ajouterPrestataire( $nomPrestataire, $logo, $description, $codePostal)
     {
-        $sql = 'insert into prestataire(nomPrestataire, logo, adresse, codePostal) values(?,?,?,?)';
-        $this->executerRequete($sql, array( $nomPrestataire, $logo, $adresse, $codePostal));
+        $sql = 'insert into prestataire(nomPrestataire, logo, Description, codePostal) values(?,?,?,?)';
+        $this->executerRequete($sql, array( $nomPrestataire, $logo, $description, $codePostal));
         
     }
-    public function modifierPrestataire($nomPrestataire, $logo, $adresse, $codePostal, $idPrestataire)
+    public function modifierPrestataire($nomPrestataire, $logo, $description, $codePostal, $idPrestataire)
     {
-        $sql = 'update prestataire set nomPrestataire = ?, logo = ?, adresse = ?, codePostal = ? where id = ?';
-        $this->executerRequete($sql, array($nomPrestataire, $logo, $adresse, $codePostal, $idPrestataire));
+        $sql = 'update prestataire set nomPrestataire = ?, logo = ?, description = ?, codePostal = ? where id = ?';
+        $this->executerRequete($sql, array($nomPrestataire, $logo, $description, $codePostal, $idPrestataire));
     }
     public function supprimerPrestataire($idPrestataire)
     {

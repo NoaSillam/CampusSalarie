@@ -11,6 +11,18 @@ class Referent extends Modele
     $referents = $this->executerRequete($sql1);
     return $referents;
     }
+    public function getReferentActualite($idReferent)
+    {
+        $sql = 'select * from referent where idReferent = ?';
+        $referent = $this->executerRequete($sql, array($idReferent));
+        if($referent->rowCount() > 0)
+        {
+            return $referent->fetch();
+        }
+        else{
+            throw new Exception("Aucun prestataire ne correspond a l'identififiant '$idReferent'");
+        }
+    }
     // public function getReferent($idReferent)
     // {
     //     $sql = 'select * from referent where id = ?';
@@ -39,6 +51,7 @@ class Referent extends Modele
     public function ajouterReferent($nom, $prenom, $mail, $numTelephone, $idPrestataire)
     {
         $sql = 'insert into referent(nom, prenom, mail, numTelephone, idPrestataire) values(?,?,?,?,?)';
+        $numTelephone = !empty($numTelephone) ? $numTelephone : 0;
         $this->executerRequete($sql, array($nom, $prenom, $mail, $numTelephone, $idPrestataire));
     }
     public function modifierReferent( $mail, $numTelephone, $idReferent)

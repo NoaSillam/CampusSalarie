@@ -1,14 +1,8 @@
 <?php
-
-// require_once 'Modele/Prestataire.php';
-// require_once 'Modele/Referent.php';
-// require_once 'Modele/AnimationPartenaire.php';
-// require_once 'Vue/Vue.php';
 require_once 'autoload.php';
 
 class ControleurPrestataire
 {
-   // private $referent;
     private $prestataire;
     private $referent;
     private $animationPartenaire;
@@ -43,9 +37,8 @@ class ControleurPrestataire
     public function accueilAjouter()
     { 
         $prestataires = $this->prestataire->getPrestataires();
-        // $vue = new Vue("Accueil", "index.php");
         $vue = new Vue("PrestataireAjouter");
-         $vue->generer(array('prestataires'=> $prestataires));
+        $vue->generer(array('prestataires'=> $prestataires));
     }
 
     public function prestataireModifier($idPrestataire)
@@ -55,6 +48,7 @@ class ControleurPrestataire
         $vue->generer(array('prestataire'=>$prestataire));
 
     }
+
     public function referentLecteur($idPrestataire)
     {
         $prestataire = $this->prestataire->getPrestataire($idPrestataire);
@@ -101,23 +95,19 @@ class ControleurPrestataire
         $vue->generer(array('prestataire'=>$prestataire, 'animationPartenaires'=>$animationPartenaires));
     }
 
-    public function ajoutPrestataire($nomPrestataire, $logo, $adresse, $codePostal)
+    public function ajoutPrestataire($nomPrestataire, $logo, $description, $codePostal)
     {
-        $this->prestataire->ajouterPrestataire($nomPrestataire, $logo, $adresse, $codePostal);
+        $this->prestataire->ajouterPrestataire($nomPrestataire, $logo, $description, $codePostal);
         header("location:index.php");
-        
-       // $this->prestataire($idPrestataire);
     }
-    public function modifPrestataire($nomPrestataire, $logo, $adresse, $codePostal, $idPrestataire)
+    public function modifPrestataire($nomPrestataire, $logo, $description, $codePostal, $idPrestataire)
     {
-        $this->prestataire->modifierPrestataire($nomPrestataire, $logo, $adresse, $codePostal, $idPrestataire);
+        $this->prestataire->modifierPrestataire($nomPrestataire, $logo, $description, $codePostal, $idPrestataire);
         header("location:index.php");
-       //$this->referents($idReferent); 
     }
     public function deletePrestataire($idPrestataire)
     {
         $this->prestataire->supprimerPrestataire($idPrestataire);
         header("location:index.php");
-       // $this->prestataire($idPrestataire);
     }
 }

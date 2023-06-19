@@ -18,7 +18,12 @@ class Inscrit extends Modele
     }
     public function getInscritBenevoles()
     {
-        $sql = 'SELECT inscrit.id, inscrit.civilite, inscrit.nom, inscrit.dateInscription, inscrit.prenom, inscrit.mail, datediff(inscrit.dateInscription, "1901-01-01") as dateInscrit , (year(CURRENT_DATE()) - inscrit.anneeNaissance) as age from inscrit inner join inscritStatut on inscrit.id = inscritStatut.idInscrit where inscritStatut.idStatut = 1;';
+        $sql = 'SELECT mission.titre, inscrit.id, inscrit.civilite, inscrit.nom, inscrit.dateInscription, inscrit.prenom, inscrit.numTelephone, inscrit.mail, datediff(inscrit.dateInscription, "1901-01-01") as dateInscrit , (year(CURRENT_DATE()) - inscrit.anneeNaissance) as age 
+        FROM inscrit 
+        INNER JOIN inscritStatut ON inscrit.id = inscritStatut.idInscrit 
+        LEFT JOIN mission ON inscritStatut.idMission = mission.idMission 
+        WHERE inscritStatut.idStatut = 1;
+        ';
         $benevoles = $this->executerRequete($sql);
         return $benevoles;
     }
@@ -80,39 +85,67 @@ class Inscrit extends Modele
         $inscrit = $this->executerRequete($sql, array($idInscrit));
         return $inscrit;
     }
-    public function ajouterInscritBenevole($idInscrit, $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal)
+    public function ajouterInscritBenevole($nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $ville, $anneeNaissance, $civilite)
     {
-        $sql = 'insert into inscrit(id, nom, prenom, mail, numTelephone, adresse, codePostal) values(?,?,?,?,?,?,?)';
-        $sql1 = 'insert into inscritStatut(idInscrit, idStatut) values(?, 1)';
-        $this->executerRequete($sql, array($idInscrit, $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal));
-        $this->executerRequete($sql1, array($idInscrit));
+        $sql = 'INSERT INTO inscrit(id, nom, prenom, mail, numTelephone, adresse, codePostal, ville, anneeNaissance, civilite, dateInscription) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_DATE())';
+    $sql1 = 'INSERT INTO inscritStatut(idInscrit, idStatut) VALUES (?, 1)';
+    $nbInscrits = $this->getNombreInscrits();
+    $idInscrit = 301 + $nbInscrits;
+    $numTelephone = !empty($numTelephone) ? $numTelephone : 0; // Ajout de la condition if
+    $this->executerRequete($sql, array($idInscrit, $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $ville, $anneeNaissance, $civilite));
+    $this->executerRequete($sql1, array($idInscrit));
     }
-    public function ajouterInscritDonateur($idInscrit, $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $montant)
+//     public function ajouterInscritBenevole($nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $anneeNaissance, $civilite)
+// {
+//     $sql = 'insert into inscrit(nom, prenom, mail, numTelephone, adresse, codePostal, anneeNaissance, civilite, dateInscription) values(?,?,?,?,?,?,?,?, CURRENT_DATE())';
+//     $this->executerRequete($sql, array($nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $anneeNaissance, $civilite));
+//     $idInscrit = $this->getBdd()->lastInsertId();
+//     $sql1 = 'insert into inscritStatut(idInscrit, idStatut) values(?, 1)';
+//     $this->executerRequete($sql1, array($idInscrit));
+// }
+public function getNombreInscrits() {
+    $sql = 'select count(*) as nbInscrits from inscrit ';
+    $resultat = $this->executerRequete($sql);
+     $nbInscrits = $resultat->fetch(PDO::FETCH_ASSOC)['nbInscrits'];
+     return $nbInscrits;
+  }
+
+    public function ajouterInscritBenevoleMission($nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $ville, $anneeNaissance, $civilite,  $commentaire, $idMission)
     {
-        $sql = 'insert into inscrit values(?,?,?,?,?,?,?,?)';
+        $sql = 'insert into inscrit(id, nom, prenom, mail, numTelephone, adresse, codePostal, ville, anneeNaissance, civilite, commentaire, dateInscription) values(?,?,?,?,?,?,?,?,?,? ,?, CURRENT_DATE())';
+        $sql1 = 'insert into inscritStatut(idStatut, idInscrit, idMission) values( 1, ?, ?)';
+        $nbInscrits = $this->getNombreInscrits();
+        $idInscrit = 301 + $nbInscrits ;
+        $numTelephone = !empty($numTelephone) ? $numTelephone : 0;
+        $this->executerRequete($sql, array($idInscrit, $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $ville, $anneeNaissance, $civilite, $commentaire));
+        $this->executerRequete($sql1, array($idInscrit, $idMission));
+    }
+    public function ajouterInscritDonateur( $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $ville, $montant, $anneeNaissance, $civilite)
+    {
+        $sql = 'insert into inscrit(id, nom, prenom, mail, numTelephone, adresse, codePostal, ville, montant,anneeNaissance,civilite,dateInscription) values(?,?,?,?,?,?,?,?,?,?,?, CURRENT_DATE())';
        $sql1 = 'insert into inscritStatut(idInscrit, idStatut) values(?, 2)';
-        $this->executerRequete($sql, array($idInscrit, $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $montant));
+       $nbInscrits = $this->getNombreInscrits();
+        $idInscrit = 301 + $nbInscrits ;
+        $numTelephone = !empty($numTelephone) ? $numTelephone : 0;
+        $this->executerRequete($sql, array($idInscrit, $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $ville, $montant, $anneeNaissance, $civilite));
         $this->executerRequete($sql1, array($idInscrit));
     }
     
-    public function ajouterInscritNewsletter($idInscrit, $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal)
+    public function ajouterInscritNewsletter( $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $ville, $anneeNaissance, $civilite)
     {
-        $sql = 'insert into inscrit(id, nom, prenom, mail, numTelephone, adresse, codePostal) values(?,?,?,?,?,?,?)';
+        $sql = 'insert into inscrit(id, nom, prenom, mail, numTelephone, adresse, codePostal, ville, anneeNaissance, civilite, dateInscription) values(?,?,?,?,?,?,?,?,?,?, CURRENT_DATE())';
         $sql1 = 'insert into inscritStatut(idInscrit, idStatut) values(?, 3)';
-        $this->executerRequete($sql, array($idInscrit, $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal));
+        $nbInscrits = $this->getNombreInscrits();
+        $idInscrit = 301 + $nbInscrits ;
+        $numTelephone = !empty($numTelephone) ? $numTelephone : 0;
+        $this->executerRequete($sql, array($idInscrit, $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $ville, $anneeNaissance, $civilite));
         $this->executerRequete($sql1, array($idInscrit));
     }
-    public function ajouterInscritPrevention($idInscrit, $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal)
+    public function modifierInscrit($nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $ville, $idInscrit)
     {
-        $sql = 'insert into inscrit(id, nom, prenom, mail, numTelephone, adresse, codePostal) values(?,?,?,?,?,?,?)';
-        $sql1 = 'insert into inscritStatut(idInscrit, idStatut) values(?, 4)';
-        $this->executerRequete($sql, array($idInscrit, $nom, $prenom, $mail, $numTelephone, $adresse, $codePostal));
-        $this->executerRequete($sql1, array($idInscrit));
-    }
-    public function modifierInscrit($nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $idInscrit)
-    {
-        $sql = 'update inscrit set nom = ?, prenom = ?, mail = ?, numTelephone = ?, adresse = ?, codePostal = ? where id = ?';
-        $this->executerRequete($sql, array($nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $idInscrit));
+        $sql = 'update inscrit set nom = ?, prenom = ?, mail = ?, numTelephone = ?, adresse = ?, codePostal = ?, ville = ? where id = ?';
+        $this->executerRequete($sql, array($nom, $prenom, $mail, $numTelephone, $adresse, $codePostal, $ville, $idInscrit));
     }
     public function supprimerInscritDonateur($idInscrit)
     {

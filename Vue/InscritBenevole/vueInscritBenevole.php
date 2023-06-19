@@ -1,56 +1,70 @@
-<h1>Les benevoles</h1>
+<style>
+     .hidden{
+    visibility: hidden;
+ }
+ .supprimer{
+    
+    width: 85%;
+ }
+</style>
 
-<!-- <a href="index.php?action=ajoutDonateur"><input type="submit" value="valider"></a> -->
-<table class="table align-middle">
+<br>
+
+<h1 style="text-align: center;">Les bénévoles</h1>
+<br>
+<br>
+
+<a href="index.php?action=benevoleAjouter"><input type="submit" class="btn btn-success" value="Ajouter un bénévole"></a>
+<br>
+<br>
+<table  class="table table-bordered align-middle">
     <tbody>
     <tr class="text-align">
-        <th>Civilite</th>
-        <th>Nom</th>
-        <th>Prenom</th>
-        <th>Mail</th>
-        <th>Date de l'inscription</th>
-        <th>Age</th>
-        <th>Modifier</th>
-        <th>Supprimer</th>
+        <th style="text-align: center;">Civilité</th>
+        <th style="text-align: center;">Nom</th>
+        <th style="text-align: center;">Prénom</th>
+        <th style="text-align: center;">Mail</th>
+        <th style="text-align: center;">Téléphone</th>
+        <th  style="text-align: center;">Date de l'inscription</th>
+        <th style="text-align: center;">Age</th>
+        <th style="text-align: center;" >Mission</th>
+        <th style="text-align: center;">Modifier</th>
+        <th style="text-align: center;">Supprimer</th>
 
     </tr>
         <tr>
 
         <?php
          $fichier = fopen("export/exportInscritBenevole.csv", "w+");
-         $chaine = " ";
-        //  $nom = "Nom";
-        //  $prenom = "Prenom";
-        //  $mail = "Mail";
-        //  $dateInscription = "Date de l'inscription";
-        //  $age = "Age";
-        //  $chaine = "\"Nom\";";
-        //  $chaine .= "\"".$prenom."\";";
-        //  $chaine .= "\"".$mail."\";";
-        //  $chaine .= "\"".$dateInscription."\";";
-        //  $chaine .= "\"".$age."\";";
+        $chaine = "\"Nom\";\"Prenom\";\"Mail\";\"Téléphone\";\"Date de l'inscription\";\"Age\";\"Titre de la mission\"\r\n";
+        fwrite($fichier, $chaine);
+    
         ?>
     <?php
     foreach($benevoles as $benevole):
         ?>
+
  <td><?= $benevole['civilite'] ?> </td>
   <td><?= $benevole['nom'] ?> </td>
   <td>  <?= $benevole['prenom'] ?> </td>
   <td> <?= $benevole['mail'] ?></td>
-  <td> <?= $benevole['dateInscription'] ?> </td>
+  <td>  0<?= $benevole['numTelephone'] ?></td>
+  <td > <?= $benevole['dateInscription'] ?> </td>
   <td> <?= $benevole['age'] ?></td>
-  <td><a  href="<?= "index.php?action=benevoleModifier&idInscrit=". $benevole['id']?>"> <input type="submit" class="btn btn-primary" value="Modifier" /></a></td>
-  <form action="index.php?action=deleteInscritBenevole" method="post"><td>  <input type="text" name="idInscrit" value="<?= $benevole['id'] ?>" readonly="readonly" /> <input type="submit" class="btn btn-danger" value="Supprimer" /></td></form>
+  <td> <?= $benevole['titre'] ?></td>
+  <td><a  href="<?= "index.php?action=benevoleModifier&idInscrit=". $benevole['id']?>"> <input type="submit" class="btn btn-info" style="margin-top: 3%;" value="Modifier" /></a></td>
+  <form action="index.php?action=deleteInscritBenevole" method="post"><td>  <input type="hidden" name="idInscrit"  value="<?= $benevole['id'] ?>" readonly="readonly" /> <input type="submit" class="btn btn-danger supprimer" value="Supprimer" /></td></form>
 </tr>
 <?php
-//$date = date_create('1901-01-01');
-//$dateInscription = date_diff($benevole['dateInscription'], $date);
+
 
 $chaine = "\"".$benevole['nom']."\";";
 $chaine .= "\"".$benevole['prenom']."\";";
 $chaine .= "\"".$benevole['mail']."\";";
+$chaine .= "\""."0".$benevole['numTelephone']."\";";
 $chaine .= "".$benevole['dateInscription'].";";
 $chaine .= "".$benevole['age'].";";
+$chaine .= "".$benevole['titre'].";";
 fwrite($fichier, $chaine."\r\n");
 
 ?>
@@ -58,27 +72,24 @@ fwrite($fichier, $chaine."\r\n");
 
         <?php
         fclose($fichier);
+        
         ?>
     </tbody>
 </table>
+<!-- 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#benevolesTable').DataTable({
+        "columnDefs": [{
+            "targets": "sortable",
+            "orderable": true
+        }],
+        "order": [[6, 'asc']]
+    });
+});
+</script> -->
 
-<!-- <h2 style="text-align: center;">Modifier un benevole</h2>
-<form action="index.php?action=modifInscrit" id="modifier" method="post">
-    <input type="text"  style="text-align: center;" class="form-control" name="nom" placeholder="nom" required>
-    <br>
-    <input type="text"  style="text-align: center;" class="form-control" name="prenom" placeholder="prenom" required>
-    <br>
-    <input type="text"  style="text-align: center;" class="form-control" name="numTelephone" placeholder="numTelephone" required>
-    <br>
-    <input type="text"  style="text-align: center;" class="form-control" name="mail" placeholder="mail" required>
-    <br>
-    <input type="text"  style="text-align: center;" class="form-control" name="adresse" placeholder="adresse" required>
-    <br>
-    <input type="text"  style="text-align: center;" class="form-control" name="codePostal" placeholder="codePostal" required>
-    <br>
-    <input type="text"  style="text-align: center;" class="form-control" name="id" placeholder="id" required>
-    <br>
-    <input type="submit"  style="text-align: center;" class="btn btn-primary milieu" style="margin-left: 25%;" value="Valider">
-</form> -->
 
 

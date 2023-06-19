@@ -1,0 +1,19 @@
+{
+    "name": "noasillam/test-campus-mvc-ccopie-copie-copie-dossier-bdd-mission-api-copie-connection-statut-design",
+    "autoload": {
+        "psr-4": {
+            "Noasillam\\TestCampusMvcCcopieCopieCopieDossierBddMissionApiCopieConnectionStatutDesign\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "NoaSillam",
+            "email": "noasillam@gmail.com"
+        }
+    ],
+    "require": {
+        "league/oauth2-google": "^4.0",
+        "phpmailer/phpmailer": "^6.8",
+        "sendgrid/sendgrid": "^8.0"
+    }
+}

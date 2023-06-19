@@ -10,12 +10,14 @@ class ControleurReferent
     
     private $prestataire;
     private $referent;
+    private $actualite;
 
     public function __construct()
     {
         
         $this->prestataire = new Prestataire();
        $this->referent = new Referent();
+       $this->actualite = new Actualite();
     }
     // public function referent($idReferent)
     // {
@@ -25,7 +27,27 @@ class ControleurReferent
     //     $vue->generer(array('referent'=>$referent, 'prestataires'=>$prestataires));
 
     // }
-    
+    public function actualite($idReferent)
+    {
+        $referent = $this->referent->getReferentActualite($idReferent);
+        $actualites = $this->actualite->getActualitesReferent($idReferent);
+        $vue = new Vue("Actualite");
+        $vue->generer(array('referent'=>$referent, 'actualites'=>$actualites));;
+    }
+    public function actualiteLecteur($idReferent)
+    {
+        $referent = $this->referent->getReferentActualite($idReferent);
+        $actualites = $this->actualite->getActualitesReferent($idReferent);
+        $vue = new Vue("ActualiteLecteur");
+        $vue->generer(array('referent'=>$referent, 'actualites'=>$actualites));;
+    }
+    public function actualiteEcriture($idReferent)
+    {
+        $referent = $this->referent->getReferentActualite($idReferent);
+        $actualites = $this->actualite->getActualitesReferent($idReferent);
+        $vue = new Vue("ActualiteEcriture");
+        $vue->generer(array('referent'=>$referent, 'actualites'=>$actualites));;
+    }
     public function prestataire($idPrestataire)
     {
         $prestataire = $this->prestataire->getPrestataire($idPrestataire);

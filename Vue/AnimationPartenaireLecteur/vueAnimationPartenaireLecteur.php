@@ -40,7 +40,7 @@
 
    <!-- <td> </td> -->
    <td><?= $animationPartenaire['nom'] ?></td>
-    <td> <?= $animationPartenaire['lienVideo']?> </td>
+    <td> <?= $animationPartenaire['lien']?> </td>
     <td> <?= $animationPartenaire['lienPdf']?> </td>
     <td> <?= $animationPartenaire['adresseAnim']?> </td>
     <td> <?= $animationPartenaire['codePostalAnim']?> </td>

@@ -10,6 +10,12 @@ class Video extends Modele
         $videos = $this->executerRequete($sql, array($idSalarie));
         return $videos;
     }
+    public function getThemes()
+    {
+        $sql = 'select * from theme';
+        $themes = $this->executerRequete($sql);
+        return $themes;
+    }
     public function getVideo($idVideo)
     {
         $sql = 'select * from video where idVideo = ?';

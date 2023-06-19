@@ -27,7 +27,7 @@ foreach($themes as $theme):
    <td><?= $theme['libelle'] ?> </td>
     <td><?= $theme['descriptif'] ?></td>
     <td><img width="300" height="200" src="image/<?= $theme['img'] ?>"></td>
-    <td> <a href="<?= "index.php?action=sousThmLecteur&idThemeParent=".$theme['id']?>" > <input type="submit" class="btn btn-primary" value="Sous-Themes" /></a></td>
+    <td> <a href="<?= "index.php?action=sousThmLecteur&idThemeParent=".$theme['id']?>" > <input type="submit" class="btn btn-primary" style="width: 100%;" value="Sous-Themes" /></a></td>
 
 
 </tr>

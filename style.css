@@ -1,0 +1,519 @@
+/* Button - Open Links, Navigate Design */
+
+
+/* Auto layout */
+body
+{
+    text-align: center;
+}
+.alphabet
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    position: absolute;
+    border: 2px solid blueviolet;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 55px;
+    border-radius: 10px;
+    font-size: 20px;
+    border-block-end: 4px solid blueviolet;
+    writing-mode: horizontal-tb;
+}
+.tables
+{
+    width: 300px;
+    height: auto;
+}
+.milieu
+{
+    margin-left: 350px;
+    margin-top: -220px;
+}
+.gauche
+{
+    margin-left: 700px;
+    margin-top: -220px;
+}
+.gaucheext
+{
+    margin-left: 1050px;
+    margin-top: -260px;
+}
+.tbl
+{
+    border: 1px solid black;
+    height: auto;
+}
+.alphabet:hover{
+    background-color: blueviolet;
+    color: white;
+}
+
+
+
+/* Button - Open Links, Navigate Design */
+
+
+/* Auto layout */
+#alphabetA {
+  left: 19%;
+  top: 50%;
+  }
+  
+  #alphabetB {
+  left: 24%;
+  top: 50%;
+  }
+  
+  #alphabetC {
+  left: 29%;
+  top: 50%;
+  }
+  
+  #alphabetD {
+  left: 34%;
+  top: 50%;
+  }
+  
+  #alphabetE {
+  left: 39%;
+  top: 50%;
+  }
+  
+  #alphabetF {
+  left: 44%;
+  top: 50%;
+  }
+  
+  #alphabetG {
+  left: 49%;
+  top: 50%;
+  }
+  
+  #alphabetH {
+  left: 54%;
+  top: 50%;
+  }
+  
+  #alphabetI {
+  left: 59%;
+  top: 50%;
+  }
+  
+  #alphabetJ {
+  left: 64%;
+  top: 50%;
+  }
+  
+  #alphabetK {
+  left: 69%;
+  top: 50%;
+  }
+  
+  #alphabetL {
+  left: 74%;
+  top: 50%;
+  }
+  
+  #alphabetM {
+  left: 79%;
+  top: 50%;
+  }
+  
+  #alphabetN {
+    left: 19%;
+  top: 62.2%;
+  }
+  
+  #alphabetO {
+    left: 24%;
+  top: 62.2%;
+  }
+  
+  #alphabetP {
+    left: 29%;
+  top: 62.2%;
+  }
+  
+  #alphabetQ {
+    left: 34%;
+  top: 62.2%;
+  }
+  
+  #alphabetR {
+    left: 39%;
+  top: 62.2%;
+  }
+  
+  #alphabetS {
+    left: 44%;
+  top: 62.2%;
+  }
+  
+  #alphabetT {
+    left: 49%;
+  top: 62.2%;
+  }
+  
+  #alphabetU {
+    left: 54%;
+  top: 62.2%;
+  }
+  
+  #alphabetV {
+    left: 59%;
+  top: 62.2%;
+  }
+  
+  #alphabetW {
+    left: 64%;
+  top: 62.2%;
+  }
+  
+  #alphabetX {
+    left: 69%;
+  top: 62.2%;
+  }
+  
+  #alphabetY {
+    left: 74%;
+  top: 62.2%;
+  }
+
+
+
+
+
+
+
+/* Button - Open Links, Navigate Design */
+
+
+/* Auto layout */
+
+
+
+#alphabetZ
+{
+  left: 79%;
+  top: 62.2%;
+
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  /* background: linear-gradient(to right, #ff69b4, #87CEFA); */
+  background: linear-gradient(to right, #b72a70, #87CEFA);
+  height: 60px;
+}
+/* CSS for navbar logo */
+.navbar img {
+  height: 40px;
+  margin-left: 20px;
+}
+/* CSS for navbar links */
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 20px;
+}
+/* CSS for dropdown menu */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+/* CSS for dropdown content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 360px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  text-align: center;
+  z-index: 1;
+}
+/* CSS for dropdown links */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+/* CSS for dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+/* CSS to show dropdown on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+/*
+.header {
+position: absolute;
+width: 100%;
+height: 100%;
+}*/
+
+
+
+/* 
+.modal {
+    display: none; /* Hidden by default */
+    /*position: fixed;  Stay in place */
+   /* z-index: 1;*/ /* Sit on top */
+   /* padding-top: 100px; /* Location of the box */
+    /*left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+  /*  height: 100%; /* Full height */
+ /*   overflow: auto; /* Enable scroll if needed */
+ /*   background-color: rgb(0,0,0); /* Fallback color */
+ /*   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+ /* }
+  
+  /* Modal Content */
+  /* .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  } */
+  
+  /* The Close Button */
+  /* .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }*/ 
+
+/* 
+width: 64px;
+height: 55px;
+left: 254px;
+top: 196px; */ 
+
+
+
+
+
+/* * { */
+    /* box-sizing: border-box;
+  }
+  body {
+    font-family: Roboto, Helvetica, sans-serif;
+  }
+  /* Fixez le bouton sur le côté gauche de la page the button on the left side of the page */
+  /* .open-btn {
+    display: flex;
+    justify-content: flex-start;
+  } */
+  /* Stylez et fixez le bouton sur la page */
+  /* .open-button {
+    background-color: #1c87c9;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+  } */
+  /* Positionnez la forme Popup */
+  /* .login-popup {
+    position: relative;
+    text-align: center;
+    width: 100%;
+  } */
+  /* Masquez la forme Popup */
+  /* .form-popup {
+    display: none;
+    position: fixed;
+    left: 45%;
+    top: 5%;
+    transform: translate(-45%, 5%);
+    border: 2px solid #666;
+    z-index: 9;
+  } */
+  /* Styles pour le conteneur de la forme */
+  /* .form-container {
+    max-width: 300px;
+    padding: 20px;
+    background-color: #fff;
+  } */
+  /* Largeur complète pour les champs de saisie */
+  /* .form-container input[type="text"],
+  .form-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #eee;
+  } */
+  /* Quand les entrées sont concentrées, faites quelque chose */
+  /* .form-container input[type="text"]:focus,
+  .form-container input[type="password"]:focus {
+    background-color: #ddd;
+    outline: none;
+  } */
+  /* Stylez le bouton de connexion */
+  /* .form-container .btn {
+    background-color: #8ebf42;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  } */
+  /* Stylez le bouton pour annuler */
+  /* .form-container .cancel {
+    background-color: #cc0000;
+  } */
+  /* Planez les effets pour les boutons */
+  /* .form-container .btn:hover,
+  .open-button:hover {
+    opacity: 1;
+  } */ 
+
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 8;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .modal-content {
+    margin: 50px auto;
+    border: 1px solid #999;
+    width: 60%;
+  }
+  h2,
+  p {
+    margin: 0 0 20px;
+    font-weight: 400;
+    color: #999;
+  }
+  span {
+    color: #666;
+    display: block;
+    padding: 0 0 5px;
+  }
+  form {
+    padding: 25px;
+    margin: 25px;
+    box-shadow: 0 2px 5px #f5f5f5;
+    background: #eee;
+  }
+  input,
+  textarea {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    outline: none;
+  }
+  .contact-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #1c87c9;
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+  }
+  button:hover {
+    background: #2371a0;
+  }
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  button.button {
+    background: none;
+    border-top: none;
+    outline: none;
+    border-right: none;
+    border-left: none;
+    border-bottom:none;
+    padding: 0 0 3px 0;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  button.button:hover {
+    border-bottom: #a99567 1px solid;
+    color: #a99567;
+  }
+.fermer
+{
+    width: 50px;
+    height: 30px;
+    margin-right: 100%;
+
+  }
+  .contient
+  {
+    width: auto;
+  }
+  /* Modal styles */
+  .modal-Dic {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .modal-content-Dic {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    height: 80%;
+  }
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }

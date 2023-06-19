@@ -4,24 +4,34 @@
     justify-content: center;
     width: 50%;
  }
+ .hidden{
+    visibility: hidden;
+ }
+ .supprimer{
+    /* margin-left: 9%; */
+    width: 70%;
+ }
 </style>
 
-
-<h1>Les donateurs</h1>
-
-<!-- <a href="index.php?action=ajoutDonateur"><input type="submit" value="valider"></a> -->
-<table class="table align-middle">
+<br>
+<h1 style="text-align: center;">Les donateurs</h1>
+<br>
+<br>
+<a href="index.php?action=donateurAjouter"><input class="btn btn-success" type="submit" value="Ajouter un donateur"></a>
+<br>
+<br>
+<table class="table table-bordered align-middle">
     <tbody>
     <tr class="text-align">
-        <th>Civilité</th>
-        <th>Nom</th>
-        <th>Prenom</th>
-        <th>Mail</th>
-        <th>Montant</th>
-        <th>Date du don</th>
-        <th>Age</th>
-        <th>Modifier</th>
-        <th>Supprimer</th>
+        <th  style="text-align: center;">Civilité</th>
+        <th  style="text-align: center;">Nom</th>
+        <th style="text-align: center;">Prénom</th>
+        <th style="text-align: center;">Mail</th>
+        <th style="text-align: center;">Montant</th>
+        <th style="text-align: center;">Date du don</th>
+        <th  style="text-align: center;">Age</th>
+        <th style="text-align: center;">Modifier</th>
+        <th style="text-align: center;">Supprimer</th>
 
     </tr>
     <tr>
@@ -50,8 +60,8 @@
   <td> <?= $donateur['montant'] ?> </td>
   <td>  <?= $donateur['dateInscription'] ?> </td>
   <td> <?= $donateur['age'] ?> </td>
-  <td><a  href="<?= "index.php?action=donateurModifier&idInscrit=". $donateur['id']?>"> <input type="submit" class="btn btn-primary" value="Modifier" /></a></td>
-  <form action="index.php?action=deleteInscritDonateur" method="post"><td>  <input type="text" name="idInscrit" value="<?= $donateur['id'] ?>" readonly="readonly" /> <input type="submit" class="btn btn-danger" value="Supprimer" /></td></form>
+  <td><a  href="<?= "index.php?action=donateurModifier&idInscrit=". $donateur['id']?>"> <input type="submit" class="btn btn-info" value="Modifier" /></a></td>
+  <form action="index.php?action=deleteInscritDonateur" method="post"><td>  <input type="hidden" name="idInscrit"  value="<?= $donateur['id'] ?>" readonly="readonly" /> <input type="submit" class="btn btn-danger supprimer" value="Supprimer" /></td></form>
  
 
 

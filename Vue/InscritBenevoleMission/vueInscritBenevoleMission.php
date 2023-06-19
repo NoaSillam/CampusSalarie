@@ -1,21 +1,27 @@
-<h1>Les benevoles</h1>
-<table class="table align-middle">
+
+<?php
+    foreach($mission as $miss):
+        ?>
+<h1 style="text-align: center;">Les bénévoles de la mission <span style="color: red;"><?= $miss['titre'] ?> </span></h1>
+<?php endforeach;?>
+<table class="table table-bordered align-middle">
     <tbody>
     <tr class="text-align">
-        <th>Civilite</th>
-        <th>Nom</th>
-        <th>Prenom</th>
-        <th>Mail</th>
-        <th>Date de l'inscription</th>
-        <th>Age</th>
-        <th>Modifier</th>
-        <th>Supprimer</th>
+        <th style="text-align: center;">Civilité</th>
+        <th style="text-align: center;">Nom</th>
+        <th style="text-align: center;">Prénom</th>
+        <th style="text-align: center;">Mail</th>
+        <th style="text-align: center;">Date de l'inscription</th>
+        <th style="text-align: center;">Age</th>
+        <th style="text-align: center;">Modifier</th>
+        <th style="text-align: center;">Supprimer</th>
 
     </tr>
         <tr>
     <?php
     foreach($inscrits as $inscrit):
         ?>
+     
  <td><?= $inscrit['civilite'] ?> </td>
   <td><?= $inscrit['nom'] ?> </td>
   <td>  <?= $inscrit['prenom'] ?> </td>
@@ -23,7 +29,7 @@
   <td> <?= $inscrit['dateInscription'] ?> </td>
   <td> <?= $inscrit['age'] ?></td>
   <td><a  href="<?= "index.php?action=benevoleModifier&idInscrit=". $inscrit['id']?>"> <input type="submit" class="btn btn-primary" value="Modifier" /></a></td>
-  <form action="index.php?action=deleteInscritBenevole" method="post"><td>  <input type="text" name="idInscrit" value="<?= $inscrit['id'] ?>" /> <input type="submit" class="btn btn-danger" value="Supprimer" /></td></form>
+  <form action="index.php?action=deleteInscritBenevole" method="post"><td>  <input type="hidden" name="idInscrit" value="<?= $inscrit['id'] ?>" /> <input type="submit" class="btn btn-danger" value="Supprimer" /></td></form>
   
  
 

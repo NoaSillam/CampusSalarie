@@ -52,7 +52,30 @@ class ControleurTheme{
         $vue = new Vue("ThemeModifier");
          $vue->generer(array('theme'=> $theme));
     }
-    
+    public function themeVideo($idTheme)
+    {
+        $videoDoc = $this->theme->getVideoTheme($idTheme);
+        $vue = new Vue("ThemeVideo");
+        $vue->generer(array('videoDoc'=>$videoDoc));
+    }
+    public function themeVideoEcriture($idTheme)
+    {
+        $videoDoc = $this->theme->getVideoTheme($idTheme);
+        $vue = new Vue("ThemeVideoEcriture");
+        $vue->generer(array('videoDoc'=>$videoDoc));
+    }
+    public function themeDocument($idTheme)
+    {
+        $videoDoc = $this->theme->getDocumentTheme($idTheme);
+        $vue = new Vue("ThemeDocument");
+        $vue->generer(array('videoDoc'=>$videoDoc));
+    }
+    public function themeDocumentEcriture($idTheme)
+    {
+        $videoDoc = $this->theme->getDocumentTheme($idTheme);
+        $vue = new Vue("ThemeDocumentEcriture");
+        $vue->generer(array('videoDoc'=>$videoDoc));
+    }
 
     // public function sousThm($idThemeParent)
     // { 
@@ -141,7 +164,7 @@ class ControleurTheme{
     public function ajoutSousTheme($libelle, $descriptif, $img, $idThemeParent)
     {
         $this->theme->ajouterSousTheme($libelle, $descriptif, $img, $idThemeParent);
-        header("location:index.php?action=themes");
+        header("location:index.php?action=sousThm&idThemeParent=".$idThemeParent);
 
        // $this->prestataire($idPrestataire);
     }
@@ -159,9 +182,9 @@ class ControleurTheme{
 
        //$this->referents($idReferent); 
     }
-    public function modifSousTheme($libelle, $descriptif, $img, $idThemeParent, $idTheme)
+    public function modifSousTheme($libelle, $descriptif, $img, $idTheme)
     {
-        $this->theme->modifierSousTheme($libelle, $descriptif, $img, $idThemeParent, $idTheme);
+        $this->theme->modifierSousTheme($libelle, $descriptif, $img, $idTheme);
         header("location:index.php?action=themes");
 
        //$this->referents($idReferent); 

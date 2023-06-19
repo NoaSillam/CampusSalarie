@@ -4,6 +4,9 @@
     justify-content: center;
     width: 50%;
     margin-left: 25%;
+ } 
+ p{
+  color: black;
  }
 </style>
 
@@ -19,8 +22,7 @@
             <th>Document</th>
             <th>Description</th>
             <th>Date de Parution</th>
-            <th>Modifier</th>
-            <th>Supprimer</th>
+        
         </tr>
         <tr>
 
@@ -51,7 +53,7 @@
   }
 
   ?>
-    <td> <?= $document['description']?> </td>
+    <td> <?= htmlspecialchars_decode($document['description'])?> </td>
     <td> <?= $document['dateParution']?> </td>
 
    

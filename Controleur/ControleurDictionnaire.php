@@ -62,11 +62,11 @@ class ControleurDictionnaire
         $vue->generer(array('dictionnaire'=>$dictionnaire));
 
     }
-    public function dictionnaire($libelle, $definition, $img, $idSalarie)
+    public function dictionnaire($libelle, $definition, $img)
     {
-        $this->dictionnaire->ajouterDictionnaire($libelle, $definition, $img, $idSalarie);
+        $this->dictionnaire->ajouterDictionnaire($libelle, $definition, $img);
         header('location:index.php');
-        $this->salarie($idSalarie);
+        // $this->salarie($idSalarie);
     }
     public function modifDictionnaire( $definition, $img, $idDictionnaire)
     {

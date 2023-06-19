@@ -67,7 +67,7 @@ class ControleurAnimationPartenaire
         $vue = new Vue("AnimationPartenaire");
         $vue->generer(array('animationPartenaire'=>$animationPartenaire));
     }
-    public function animationPartenaire($nom, $lienVideo, $lienPdf, $adresse, $codePostal, $ville, $type, $img, $descriptif, $dateParution, $idPrestataire, $latitude, $longitude)
+    public function animationPartenaire($nom, $adresse, $codePostal, $ville, $img, $descriptif, $idPrestataire, $latitude, $longitude)
     {
                     $adresselatlon = str_replace(" ", "%20", $adresse);
                     $villelatlon = str_replace(" ", "%20", $ville);
@@ -80,14 +80,24 @@ class ControleurAnimationPartenaire
                     $longitude =  $data['features'][0]['geometry']['coordinates'][0];
                     $latitude = $data['features'][0]['geometry']['coordinates'][1];
                    
-                   $this->animationPartenaire->ajouterAnimationPartenaire($nom, $lienVideo, $lienPdf, $adresse, $codePostal, $ville, $type, $img, $descriptif, $dateParution, $idPrestataire, $latitude, $longitude);
+                   $this->animationPartenaire->ajouterAnimationPartenaire($nom, $adresse, $codePostal, $ville, $img, $descriptif, $idPrestataire, $latitude, $longitude);
        // header("location:index.php");
         $this->prest($idPrestataire);
        
     }
-    public function modifAnimationPartenaire($nom, $lienVideo, $lienPdf, $adresse, $codePostal, $ville, $idAnimationPartenaire)
+    public function modifAnimationPartenaire($nom, $descriptif, $adresse, $codePostal, $ville, $latitude, $longitude, $idAnimationPartenaire)
     {
-        $this->animationPartenaire->modifierAnimationPartenaire($nom, $lienVideo, $lienPdf, $adresse, $codePostal, $ville, $idAnimationPartenaire);
+        $adresselatlon = str_replace(" ", "%20", $adresse);
+        $villelatlon = str_replace(" ", "%20", $ville);
+        $code = str_replace(" ", "%20", $codePostal);
+        $ch = curl_init("https://api-adresse.data.gouv.fr/search/?q=".$adresselatlon."%20".$villelatlon."%20".$code."&format=json");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $reponse = curl_exec($ch);
+        curl_close($ch);
+        $data = json_decode($reponse, true);
+        $longitude =  $data['features'][0]['geometry']['coordinates'][0];
+        $latitude = $data['features'][0]['geometry']['coordinates'][1];
+        $this->animationPartenaire->modifierAnimationPartenaire($nom, $descriptif, $adresse, $codePostal, $ville, $latitude, $longitude, $idAnimationPartenaire);
         header("location:index.php");
         $this->animationPartenaires($idAnimationPartenaire);
     }

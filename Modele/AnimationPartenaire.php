@@ -22,16 +22,16 @@ class AnimationPartenaire extends Modele
 
         return $animationPartenaire;
     }
-    public function ajouterAnimationPartenaire($nom, $lienVideo, $lienPdf, $adresse, $codePostal, $ville, $type, $img, $descriptif, $dateParution, $idPrestataire, $latitude, $longitude)
+    public function ajouterAnimationPartenaire($nom, $adresse, $codePostal, $ville, $img, $descriptif, $idPrestataire, $latitude, $longitude)
     {
-        $sql = 'insert into animationPartenaire(nom, lienVideo, lienPdf, adresseAnim, codePostalAnim, villeAnim, type, img, descriptif, dateParution, idPrestataire, latitude, longitude) values(?,?,?,?,?,?,?,?,?,?,?,?,?)';
+        $sql = 'insert into animationPartenaire(nom, adresseAnim, codePostalAnim, villeAnim, img, descriptif, idPrestataire, latitude, longitude) values(?,?,?,?,?,?,?,?,?)';
        // $dateParution = date(DATE_W3C);
-        $this->executerRequete($sql, array( $nom, $lienVideo, $lienPdf, $adresse, $codePostal, $ville, $type, $img, $descriptif, $dateParution, $idPrestataire, $latitude, $longitude));
+        $this->executerRequete($sql, array( $nom, $adresse, $codePostal, $ville, $img, $descriptif, $idPrestataire, $latitude, $longitude));
     }
-    public function modifierAnimationPartenaire($nom, $lienVideo, $lienPdf, $adresse, $codePostal, $ville, $idAnimationPartenaire)
+    public function modifierAnimationPartenaire($nom, $descriptif, $adresse, $codePostal, $ville, $latitude, $longitude, $idAnimationPartenaire)
     {
-        $sql = 'update animationPartenaire set nom = ?, lienVideo = ?, lienPdf = ?, adresseAnim = ?, codePostalAnim = ?, villeAnim=? where idAnimPartenaire = ? ';
-        $this->executerRequete($sql, array($nom, $lienVideo, $lienPdf, $adresse, $codePostal, $ville, $idAnimationPartenaire));
+        $sql = 'update animationPartenaire set nom = ?, descriptif = ?, adresseAnim = ?, codePostalAnim = ?, villeAnim=?, latitude=?, longitude=? where idAnimPartenaire = ? ';
+        $this->executerRequete($sql, array($nom, $descriptif, $adresse, $codePostal, $ville, $latitude, $longitude, $idAnimationPartenaire));
     }
     public function supprimerAnimationPartenaire($idAnimationPartenaire)
     {

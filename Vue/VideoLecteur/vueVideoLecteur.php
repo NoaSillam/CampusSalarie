@@ -5,6 +5,9 @@
     width: 50%;
     margin-left: 25%;
  }
+ p{
+  color: black;
+ }
 </style>
 
 <!-- <a href="index.php?action=videoAjouter"><input type="submit" class="btn btn-primary" value="Ajouter une video"></a> -->
@@ -21,7 +24,7 @@
             <th>Video</th>
             <!-- <th>duree</th> -->
             <th>Date de Parution</th>
-            <th>Date de Création</th>
+           
 
         </tr>
         <tr>
@@ -31,10 +34,10 @@
    <!-- <td> </td> -->
 
    <td><?= $video['libelle'] ?></td>
-    <td> <?= $video['description']?> </td>
+    <td> <?= htmlspecialchars_decode($video['description'])?> </td>
     <td><iframe width="300" height="220" src=" <?= $video['lien']?>"></iframe> </td>
     <td> <?= $video['dateParution']?> </td>
-    <td> <?= $video['dateCreation']?> </td>
+   
 
    
     </tr>

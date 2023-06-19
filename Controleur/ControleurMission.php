@@ -66,14 +66,14 @@ class ControleurMission
     //     $this->mission->ajoutMission($idMission, $titre, $annonce, $adresse, $codePostal, $ville);
     //     header("location:index.php?action=BenevoleMssion");
     // }
-    public function ajouterBenevoleMission($idMission, $titre, $annonce, $adresse, $codePostal, $ville)
+    public function ajouterBenevoleMission($titre, $annonce, $adresse, $codePostal, $ville )
     {
-        $this->mission->ajoutMission($idMission, $titre, $annonce, $adresse, $codePostal, $ville);
+        $this->mission->ajoutMission($titre, $annonce, $adresse, $codePostal, $ville );
         header("location:index.php?action=BenevoleMssion");
     }
-    public function modifierBenevoleMission( $titre, $annonce, $adresse, $codePostal, $ville, $idMission)
+    public function modifierBenevoleMission( $titre, $annonce, $idMission)
     {
-        $this->mission->modifMission( $titre, $annonce, $adresse, $codePostal, $ville, $idMission);
+        $this->mission->modifMission( $titre, $annonce, $idMission);
         header("location:index.php?action=BenevoleMssion");
     }
     // public function supprimerMission($idMission)

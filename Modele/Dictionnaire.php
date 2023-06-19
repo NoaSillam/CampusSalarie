@@ -14,7 +14,7 @@ class Dictionnaire extends Modele
     }
     public function getDicAccueil()
     {
-        $sql = 'select * from dictionnaire';
+        $sql = 'select * from dictionnaire order by libelle asc';
         $dictionnaires = $this->executerRequete($sql);
         return $dictionnaires;
     }
@@ -32,10 +32,10 @@ class Dictionnaire extends Modele
         $dictionnaire = $this->executerRequete($sql, array($idDictionnaire));
         return $dictionnaire;
     }
-    public function ajouterDictionnaire($libelle, $definition, $img, $idSalarie)
+    public function ajouterDictionnaire($libelle, $definition, $img)
     {
-        $sql = 'insert into dictionnaire(libelle, definition, img, idSalarie) values(?,?,?,?)';
-        $this->executerRequete($sql, array($libelle, $definition, $img, $idSalarie));
+        $sql = 'insert into dictionnaire(libelle, definition, img) values(?,?,?)';
+        $this->executerRequete($sql, array($libelle, $definition, $img));
     }
     public function modifierDictionnaire( $definition, $img, $idDictionnaire)
     {

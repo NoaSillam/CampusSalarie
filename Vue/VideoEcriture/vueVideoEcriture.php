@@ -5,24 +5,31 @@
     width: 50%;
     margin-left: 25%;
  }
+ p{
+  color: black;
+ }
 </style>
-
-<a href="index.php?action=videoAjouter"><input type="submit" class="btn btn-primary" value="Ajouter une video"></a>
-
+<br>
 <article>
-    <h1>Liste mis a jour des Videos </h1>
+    <h1 style="text-align:center;">Liste mis a jour des Videos </h1>
 </article>
-<table class="table">
+
+<br>
+<br>
+<a href="index.php?action=videoAjouter"><input type="submit" class="btn btn-success" style="width: 30%; float: left;" value="Ajouter une video"></a>
+<br>
+<br>
+<table class="table table-bordered align-middle">
     <tbody>
         <tr>
-            <th>Libelle</th>
+            <th  style="text-align: center;">Libelle</th>
             <!-- <th>Type</th> -->
-            <th>Description</th>
-            <th>Video</th>
+            <th  style="text-align: center;">Description</th>
+            <th style="text-align: center;">Video</th>
             <!-- <th>duree</th> -->
-            <th>Date de Parution</th>
-            <th>Date de Creation</th>
-            <th>Modifier</th>
+            <th style="text-align: center;">Date de Parution</th>
+            <th style="text-align: center;">Disponibilité</th>
+            <th style="text-align: center;">Modifier</th>
             <!-- <th>Supprimer</th> -->
         </tr>
         <tr>
@@ -32,11 +39,33 @@
    <!-- <td> </td> -->
 
    <td><?= $video['libelle'] ?></td>
-    <td> <?= $video['description']?> </td>
+   <td>
+   <?php 
+      $description = strip_tags( htmlspecialchars_decode($video['description'])); // Supprime les balises HTML de la description
+      if (strlen($description) > 255) {
+         $description = substr($description, 0, 255);
+         $last_space = strrpos($description, ' ');
+         if ($last_space !== false) {
+            $description = substr($description, 0, $last_space) . '...';
+         } else {
+            $description .= '...';
+         }
+      }
+      echo $description;
+   ?>
+</td>
     <td><iframe width="300" height="220" src=" <?= $video['lien']?>"></iframe> </td>
-    <td> <?= $video['dateParution']?> </td>
-    <td> <?= $video['dateCreation']?> </td>
-    <td><a  href="<?= "index.php?action=videoModifier&idVideo=". $video['idDocVideo']?>"> <input type="submit" class="btn btn-primary" value="Modifier"> </a></td>
+    <td> <?= date('d/m/Y', strtotime($video['dateParution'])) ?> </td>
+    <td> <?php
+   if($video['dateParution'] <= date('Y-m-d H:i'))
+   {
+    echo "disponible";
+   }else{
+    echo "indisponible";
+   }
+    ?>
+   
+    <td><a  href="<?= "index.php?action=videoModifier&idVideo=". $video['idDocVideo']?>"> <input type="submit" class="btn btn-info" style="width: 100%;" value="Modifier"> </a></td>
     <!-- <form action="index.php?action=deleteVideo" method="post"><td>  <input type="text" name="idVideo" value="<?= $video['idDocVideo'] ?>" readonly="readonly" /> <input type="submit" class="btn btn-danger" value="Supprimer" /></td></form> -->
    
     </tr>
