@@ -22,11 +22,11 @@ class AnimationPartenaire extends Modele
 
         return $animationPartenaire;
     }
-    public function ajouterAnimationPartenaire($nom, $adresse, $codePostal, $ville, $img, $descriptif, $idPrestataire, $latitude, $longitude)
+    public function ajouterAnimationPartenaire($nom, $lienPdf, $adresse, $codePostal, $ville, $img, $descriptif, $idPrestataire, $latitude, $longitude)
     {
-        $sql = 'insert into animationPartenaire(nom, adresseAnim, codePostalAnim, villeAnim, img, descriptif, idPrestataire, latitude, longitude) values(?,?,?,?,?,?,?,?,?)';
+        $sql = 'insert into animationPartenaire(nom, lienPdf, adresseAnim, codePostalAnim, villeAnim, img, descriptif, idPrestataire, latitude, longitude) values(?, ?,?,?,?,?,?,?,?,?)';
        // $dateParution = date(DATE_W3C);
-        $this->executerRequete($sql, array( $nom, $adresse, $codePostal, $ville, $img, $descriptif, $idPrestataire, $latitude, $longitude));
+        $this->executerRequete($sql, array( $nom, $lienPdf, $adresse, $codePostal, $ville, $img, $descriptif, $idPrestataire, $latitude, $longitude));
     }
     public function modifierAnimationPartenaire($nom, $descriptif, $adresse, $codePostal, $ville, $latitude, $longitude, $idAnimationPartenaire)
     {

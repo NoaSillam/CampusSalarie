@@ -75,6 +75,20 @@ label{
   </div>
 
 </div>
+<br>
+<div class="row justify-content-center align-items-center">
+      <div class="col-md-5 form-group d-flex align-items-center">
+        <label for="hasPdf" class="col-form-label" style="width: 105%;">Ajouter un lien PDF <sup class="required">*</sup>:</label>
+        <select name="" class="form-select" id="type" required onchange="toggleInputType()">
+          <option value="non">Non</option>
+          <option value="oui">Oui</option>
+        </select>
+      </div>
+      <div class="col-md-5 form-group d-flex align-items-center" id="pdfFileContainer" style="display: none;">
+        <label for="pdfFile" class="col-form-label" id="input" style="width: 105%; visibility:hidden;">Fichier PDF de la cartographie :</label>
+        <input type="hidden" style="text-align: center; width: 210%;" class="form-control" name="lienPdf" id="lienPdf">
+      </div>
+    </div>
 
 <br>
 <div class="col-md-10 form-group d-flex align-items-center">
@@ -90,100 +104,6 @@ label{
     </div>
     <br>
     <sup class="required">*</sup> : signifie que vous devez remplir ce champ pour soumettre le formulaire
-
-
-<!-- 
-
-<label for="nom" style="display: flex; align-items: center; justify-content: center;">Nom de la cartographie:</label>
-  
-    <div class="row justify-content-center">
-         <div class="col-6">
-    <input type="text" class="form-control" name="nom" required>
-    </div>
-    </div>
-  
-   <label for="lienVideo" style="display: flex; align-items: center; justify-content: center;">Lien de la video youtube de la cartographie:</label>
-  
-    <div class="row justify-content-center">
-         <div class="col-8">
-    <input type="text" class="form-control" name="lienVideo" required>
-    </div>
-    </div> -->
-
-    <!-- <label for="lienPdf" style="display: flex; align-items: center; justify-content: center;">Lien pdf de la cartographie:</label>
-
-    <div class="row justify-content-center">
-         <div class="col-9">
-    <input type="file" class="form-control" name="lienPdf" required>
-    </div>
-    </div> -->
-    <!-- <br>
-    <label for="img" style="display: flex; align-items: center; justify-content: center;">Image de la cartographie:</label>
-
-    <div class="row justify-content-center">
-         <div class="col-9">
-    <input type="file" class="form-control" name="img" required>
-    </div>
-    </div>
-<br>
-    <label for="descriptif" style="display: flex; align-items: center; justify-content: center;">Description de la cartographie:</label>
-    
-     <textarea name="descriptif" rows="10" cols="50">Entrez votre texte ici</textarea> -->
-    <!-- <input type="text" class="form-control" name="descriptif" required> -->
-    <!-- <br>
-    
-    <label for="adresse" style="display: flex; align-items: center; justify-content: center;">Adresse postal de la cartographie:</label>
-
-    <div class="row justify-content-center">
-         <div class="col-7">
-    <input type="text" class="form-control" name="adresse" required>
-    </div>
-    </div>
-    <br>
-    <label for="codePostal" style="display: flex; align-items: center; justify-content: center;">Code postal de la cartographie:</label>
-
-    <div class="row justify-content-center">
-         <div class="col-3">
-    <input type="text" class="form-control" name="codePostal" required>
-    </div>
-    </div>
-    <br>
-    <label for="ville" style="display: flex; align-items: center; justify-content: center;">Ville de la cartographie:</label>
-   
-    <div class="row justify-content-center">
-         <div class="col-5">
-    <input type="text" class="form-control" name="ville" required>
-    </div>
-    </div> -->
-
-    <!-- <label for="type" style="display: flex; align-items: center; justify-content: center;">Type de la cartographie:</label>
-
-    <div class="row justify-content-center">
-         <div class="col-5">
-    <input type="text" class="form-control" name="type">
-    </div>
-    </div> -->
-
-    <!-- <label for="dateParution" style="display: flex; align-items: center; justify-content: center;">Date de parution de la cartographie:</label>
-
-    <div class="row justify-content-center">
-         <div class="col-5">
-    <input type="datetime-local" class="form-control" name="dateParution" required>
-    </div>
-    </div> -->
-    <!-- <br>
-    <label for="idPrestataire" style="display: flex; align-items: center; justify-content: center;">Prestataire de la cartographie:</label>
-
-    <div class="row justify-content-center">
-         <div class="col-5">
-    <select name="idPrestataire" class="form-select" id="">
-    <?php foreach($animationPartenaires as $anim):?>
-        <option value="<?= $anim['id'] ?>"><?= $anim['nomPrestataire'] ?></option>
-        <?php endforeach; ?>
-    </select>
-    </div>
-    </div> --> 
-    <!-- <div contenteditable="true" data-placeholder="Saisissez votre texte ici"></div> -->
   
 </form>
 </div>
@@ -210,4 +130,18 @@ label{
 //     '//www.tinymce.com/css/codepen.min.css'
 //   ]
 });
+
+function toggleInputType() {
+  var selectedOption = document.getElementById("type").value;
+  var lienInput = document.getElementById("lienPdf");
+  var input = document.getElementById("input")
+
+  if (selectedOption === "oui") {
+    lienInput.type = "file";
+    input.style.visibility = "visible";
+  } else if (selectedOption === "non") {
+    lienInput.type = "hidden";
+    input.style.visibility = "hidden";
+  }
+}
 </script>

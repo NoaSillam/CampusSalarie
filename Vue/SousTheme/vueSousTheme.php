@@ -62,7 +62,7 @@ foreach($sousThemes as $sousThm):
    ?>
 </td>
    
-    <td><img width="300" height="200" src="image/<?= $sousThm['img'] ?>"></td>
+    <td><img width="300" height="200" src="<?= $sousThm['img'] ?>"></td>
     <td> <a href="<?= "index.php?action=themeVideo&idTheme=".$sousThm['id']?>" > <input type="submit" style="width: 100%;" class="btn btn-primary" value="Vidéo" /></a></td>
     <td> <a href="<?= "index.php?action=themeDocument&idTheme=".$sousThm['id']?>" > <input type="submit" style="width: 100%;" class="btn btn-primary" value="Document" /></a></td>
     <td><a  href="<?= "index.php?action=sousThmModifier&idThemeParent=". $sousThm['id']?>">  <input type="submit" class="btn btn-info" style="width: 100%;" value="Modifier"> </a></td>

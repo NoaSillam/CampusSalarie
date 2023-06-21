@@ -6,6 +6,9 @@
     
     width: 85%;
  }
+ .export{
+float: right;
+ }
 </style>
 
 <br>
@@ -15,6 +18,7 @@
 <br>
 
 <a href="index.php?action=benevoleAjouter"><input type="submit" class="btn btn-success" value="Ajouter un bénévole"></a>
+<a href="archiveInscrit.zip" download><input class="btn btn-secondary export" type="submit" value="Télécharger l'export"></a>
 <br>
 <br>
 <table  class="table table-bordered align-middle">
@@ -36,7 +40,7 @@
 
         <?php
          $fichier = fopen("export/exportInscritBenevole.csv", "w+");
-        $chaine = "\"Nom\";\"Prenom\";\"Mail\";\"Téléphone\";\"Date de l'inscription\";\"Age\";\"Titre de la mission\"\r\n";
+        $chaine = "\"Civilité\";\"Nom\";\"Prénom\";\"Mail\";\"Téléphone\";\"Date de l'inscription\";\"Age\";\"Titre de la mission\";\"Commentaire\"\r\n";
         fwrite($fichier, $chaine);
     
         ?>
@@ -57,14 +61,15 @@
 </tr>
 <?php
 
-
-$chaine = "\"".$benevole['nom']."\";";
+$chaine = "\"".$benevole['civilite']."\";";
+$chaine .= "\"".$benevole['nom']."\";";
 $chaine .= "\"".$benevole['prenom']."\";";
 $chaine .= "\"".$benevole['mail']."\";";
 $chaine .= "\""."0".$benevole['numTelephone']."\";";
 $chaine .= "".$benevole['dateInscription'].";";
 $chaine .= "".$benevole['age'].";";
 $chaine .= "".$benevole['titre'].";";
+$chaine .= "".$benevole['commentaire'].";";
 fwrite($fichier, $chaine."\r\n");
 
 ?>
@@ -91,5 +96,34 @@ $(document).ready(function() {
 });
 </script> -->
 
+<?php
+$folderPath = 'export';
+$zipFileName = 'archiveInscrit.zip';
 
+$zip = new ZipArchive();
+$zip = new ZipArchive();
+if ($zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+    // Récupérer la liste des fichiers du dossier
+    $files = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($folderPath),
+        RecursiveIteratorIterator::LEAVES_ONLY
+    );
+
+    foreach ($files as $name => $file) {
+        // S'assurer que le fichier est un fichier et non un dossier
+        if (!$file->isDir()) {
+            // Obtenir le chemin relatif à partir du dossier "export" sans les dossiers parents
+            $relativePath = substr($file->getPathname(), strlen($folderPath) + 1);
+
+            // Ajouter le fichier au ZIP avec le chemin relatif
+            $zip->addFile($file->getPathname(), $relativePath);
+        }
+    }
+
+    // Fermer le ZIP
+    $zip->close();
+
+} else {
+    echo 'Erreur lors de la création du fichier ZIP.';
+}
 

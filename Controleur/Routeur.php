@@ -31,6 +31,7 @@ class Routeur
     private $ctrlConnection;
     private $ctrlMission;
     private $ctrlActualite;
+    private $ctrlAccueil;
 
 
     public function __construct()
@@ -49,6 +50,7 @@ class Routeur
         $this->ctrlConnection = new ControleurConnection();
         $this->ctrlMission = new ControleurMission();
         $this->ctrlActualite = new ControleurActualite();
+        $this->ctrlAccueil = new ControleurAccueil();
     }
     public function routeurRequete()
     {
@@ -66,6 +68,10 @@ class Routeur
                         throw new Exception("identifiant de prestataire non validée");
 
                     }
+                }
+                else if($_GET['action'] == 'telechargement')
+                {
+                    $this->ctrlAccueil->telechargement();
                 }
                else if($_GET['action']=='referentLecteur')
                 {
@@ -625,7 +631,7 @@ class Routeur
                        // header("Location: index.php?error=upload_failed");
                        exit;
                    }
-                   $this->ctrlTheme->ajoutTheme($libelle, $descriptif, $imgDestination);
+                   $this->ctrlTheme->modifTheme($libelle, $descriptif, $imgDestination, $idTheme);
                 }
                 else if ($_GET['action']== 'deleteTheme')
                 {
@@ -833,6 +839,8 @@ class Routeur
                   //  var_dump( $this->ctrlAnimationPartenaire->animationPartenaire($nom, $lienVideo, $lienPdf, $adresse, $codePostal, $ville, $type, $img, $descriptif, $dateParution, $idPrestataire, $latitude, $longitude));
 
                   $nom = htmlspecialchars($_POST['nom'], ENT_QUOTES);
+                
+                  $lienPdf = $_FILES['lienPdf']['tmp_name'];
                   $adresse = $_POST['adresse'];
                   $codePostal = $_POST['codePostal'];
                   $ville = $_POST['ville'];
@@ -861,7 +869,19 @@ class Routeur
                        // header("Location: index.php?error=upload_failed");
                        exit;
                    }
-                   $this->ctrlAnimationPartenaire->animationPartenaire($nom, $adresse, $codePostal, $ville, $imgDestination, $descriptif, $idPrestataire, $latitude, $longitude);
+                   if (isset($_FILES['lienPdf']) && $_FILES['lienPdf']['error'] === UPLOAD_ERR_OK) {
+                    $lienPdfDestination = 'image/cartographie/' . $_FILES['lienPdf']['name'];
+                    copy($_FILES['lienPdf']['tmp_name'], $lienPdfDestination);
+
+                    $lienPdfDestination2 = '/Applications/MAMP/htdocs/testCampusMvcSeniorBddMissionCopieMapDesignCopie/image/cartographie/' . $_FILES['lienPdf']['name'];
+                    copy($_FILES['lienPdf']['tmp_name'], $lienPdfDestination2);
+                    } else {
+                    // Le fichier lien n'a pas été téléchargé correctement, vous pouvez gérer cette erreur selon vos besoins.
+                    // Par exemple, vous pouvez rediriger l'utilisateur vers une page d'erreur ou afficher un message d'erreur.
+                    // header("Location: index.php?error=upload_failed");
+                    exit;
+                     }
+                   $this->ctrlAnimationPartenaire->animationPartenaire($nom, $lienPdfDestination, $adresse, $codePostal, $ville, $imgDestination, $descriptif, $idPrestataire, $latitude, $longitude);
 
 
                 }

@@ -67,7 +67,7 @@ class ControleurAnimationPartenaire
         $vue = new Vue("AnimationPartenaire");
         $vue->generer(array('animationPartenaire'=>$animationPartenaire));
     }
-    public function animationPartenaire($nom, $adresse, $codePostal, $ville, $img, $descriptif, $idPrestataire, $latitude, $longitude)
+    public function animationPartenaire($nom,$lienPdf, $adresse, $codePostal, $ville, $img, $descriptif, $idPrestataire, $latitude, $longitude)
     {
                     $adresselatlon = str_replace(" ", "%20", $adresse);
                     $villelatlon = str_replace(" ", "%20", $ville);
@@ -80,7 +80,7 @@ class ControleurAnimationPartenaire
                     $longitude =  $data['features'][0]['geometry']['coordinates'][0];
                     $latitude = $data['features'][0]['geometry']['coordinates'][1];
                    
-                   $this->animationPartenaire->ajouterAnimationPartenaire($nom, $adresse, $codePostal, $ville, $img, $descriptif, $idPrestataire, $latitude, $longitude);
+                   $this->animationPartenaire->ajouterAnimationPartenaire($nom,$lienPdf, $adresse, $codePostal, $ville, $img, $descriptif, $idPrestataire, $latitude, $longitude);
        // header("location:index.php");
         $this->prest($idPrestataire);
        

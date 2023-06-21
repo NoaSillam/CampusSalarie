@@ -168,16 +168,65 @@
   left: 0;
   top: 0;
   margin-left: -10%;
-  margin-top: -6.7%;
+  margin-top: -9.5%;
+}
+header .logo {
+  height: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+  display: flex;
+  margin-left: -24px;
+}
+
+img{
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-text-size-adjust: none;
+  text-size-adjust: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+header .logo img {
+  height: auto;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  margin-top: -2px;
+  margin-left: 24px;
+  
+}
+
+@media (max-width: 1199px) {
+  header .logo {
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 0 0 0;
+    display: inline-flex;
+  }
+
+  header .logo a {
+    height: var(--header-height);
+  }
+
+  header .logo img {
+    height: var(--header-height);
+    width: auto;
+  }
 }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 <nav class="navbar navbar-dark navbar-expand-lg bg-transparent custom-navbar" >
-  <div class="container-fluid">
+  <div class="container-fluid logo">
+
     <a class="navbar-brand ms-0" href="https://www.delta7.org/fr" target="_blank">
-      <img src="image/logoDelta7Site.png" id="logo" alt="Delta7 logo" width="255" height="80" class="d-inline-block align-text-top">
+      <img src="image/Logo-Delta7-Campus2.png" srcset="image/Logo-Delta7-Campus2@2x.png 1200w" width="180" height="auto" alt="Delta7 logo" class="d-inline-block align-text-top">
     </a>
     <button class="navbar-toggler show" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>

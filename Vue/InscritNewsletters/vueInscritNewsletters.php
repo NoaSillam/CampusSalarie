@@ -11,6 +11,9 @@
    
     width: 70%;
  }
+ .export{
+float: right;
+ }
 </style>
 <br>
 
@@ -18,6 +21,7 @@
 <br>
 <br>
 <a href="index.php?action=NewsletterAjouter"><input type="submit" class="btn btn-success" value="Ajouter une personne à une newsletter"></a>
+<a href="archiveInscrit.zip" download><input class="btn btn-secondary export" type="submit" value="Télécharger l'export"></a>
 <br>
 <br>
 <table class="table table-bordered align-middle">
@@ -27,6 +31,7 @@
         <th style="text-align: center;">Nom</th>
         <th style="text-align: center;">Prénom</th>
         <th style="text-align: center;">Mail</th>
+        <th style="text-align: center;">Telephone</th>
         <th style="text-align: center;">Date de l'inscription</th>
         <th style="text-align: center;">Age</th>
         <th style="text-align: center;">Modifier</th>
@@ -35,21 +40,12 @@
 
     </tr>
     <tr>
-
 <?php
- $fichier = fopen("export/exportInscritNewsletter.csv", "w+");
- $chaine = " ";
-//  $nom = "Nom";
-//  $prenom = "Prenom";
-//  $mail = "Mail";
-//  $dateInscription = "Date de l'inscription";
-//  $age = "Age";
-//  $chaine = "\"Nom\";";
-//  $chaine .= "\"".$prenom."\";";
-//  $chaine .= "\"".$mail."\";";
-//  $chaine .= "\"".$dateInscription."\";";
-//  $chaine .= "\"".$age."\";";
-?>
+         $fichier = fopen("export/exportInscritNewsletter.csv", "w+");
+         $chaine = "\"Civilité\";\"Nom\";\"Prenom\";\"Mail\";\"Téléphone\";\"Date de l'inscription\";\"Age\"\r\n";
+        fwrite($fichier, $chaine);
+    
+        ?>
     <?php
     foreach($newsletters as $newsletter):
         ?>
@@ -57,6 +53,7 @@
   <td>  <?= $newsletter['nom'] ?> </td>
   <td>  <?= $newsletter['prenom'] ?></td>
   <td>  <?= $newsletter['mail'] ?> </td>
+  <td>  0<?= $newsletter['numTelephone'] ?> </td>
   <td>  <?= $newsletter['dateInscription'] ?> </td>
   <td> <?= $newsletter['age'] ?></td>
   <td><a  href="<?= "index.php?action=NewsletterModifier&idInscrit=". $newsletter['id']?>"> <input type="submit" class="btn btn-info" value="Modifier" /></a></td>
@@ -66,14 +63,15 @@
 
 </tr>
 <?php
-//$date = date_create('1901-01-01');
-//$dateInscription = date_diff($benevole['dateInscription'], $date);
 
-$chaine = "\"".$newsletter['nom']."\";";
+$chaine = "\"".$newsletter['civilite']."\";";
+$chaine .= "\"".$newsletter['nom']."\";";
 $chaine .= "\"".$newsletter['prenom']."\";";
 $chaine .= "\"".$newsletter['mail']."\";";
-$chaine .= "".$newsletter['dateInscription'].";";
-$chaine .= "".$newsletter['age'].";";
+$chaine .= "\""."0".$newsletter['numTelephone']."\";";
+$chaine .= "\"".$newsletter['dateInscription']."\";";
+$chaine .= "\"".$newsletter['age']."\";";
+
 fwrite($fichier, $chaine."\r\n");
 
 ?>
@@ -83,24 +81,34 @@ fwrite($fichier, $chaine."\r\n");
         ?>
     </tbody>
 </table>
-<!-- 
-<h2 style="text-align: center;">Modifier une personne inscrit a la newsletter</h2>
-<form action="index.php?action=modifInscrit" id="modifier" method="post">
-    <input type="text"  style="text-align: center;" class="form-control" name="nom" placeholder="nom" required>
-    <br>
-    <input type="text"  style="text-align: center;" class="form-control" name="prenom" placeholder="prenom" required>
-    <br>
-    <input type="text"  style="text-align: center;" class="form-control" name="numTelephone" placeholder="numTelephone" required>
-    <br>
-    <input type="text"  style="text-align: center;" class="form-control" name="mail" placeholder="mail" required>
-    <br>
-    <input type="text"  style="text-align: center;" class="form-control" name="adresse" placeholder="adresse" required>
-    <br>
-    <input type="text"  style="text-align: center;" class="form-control" name="codePostal" placeholder="codePostal" required>
-    <br>
-    <input type="text"  style="text-align: center;" class="form-control" name="id" placeholder="id" required>
-    <br>
-    <input type="submit"  style="text-align: center; margin-left: 25%;" class="btn btn-primary milieu"  value="Valider">
-</form> -->
 
+<?php
+$folderPath = 'export';
+$zipFileName = 'archiveInscrit.zip';
 
+$zip = new ZipArchive();
+$zip = new ZipArchive();
+if ($zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+    // Récupérer la liste des fichiers du dossier
+    $files = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($folderPath),
+        RecursiveIteratorIterator::LEAVES_ONLY
+    );
+
+    foreach ($files as $name => $file) {
+        // S'assurer que le fichier est un fichier et non un dossier
+        if (!$file->isDir()) {
+            // Obtenir le chemin relatif à partir du dossier "export" sans les dossiers parents
+            $relativePath = substr($file->getPathname(), strlen($folderPath) + 1);
+
+            // Ajouter le fichier au ZIP avec le chemin relatif
+            $zip->addFile($file->getPathname(), $relativePath);
+        }
+    }
+
+    // Fermer le ZIP
+    $zip->close();
+
+} else {
+    echo 'Erreur lors de la création du fichier ZIP.';
+}

@@ -12,13 +12,34 @@ class Inscrit extends Modele
     }
     public function getInscritDonateurs()
     {
-        $sql = 'SELECT inscrit.id, inscrit.civilite, inscrit.nom,  inscrit.prenom, inscrit.mail, inscrit.montant, inscrit.dateInscription, (year(CURRENT_DATE()) - inscrit.anneeNaissance) as age from inscrit inner join inscritStatut on inscrit.id = inscritStatut.idInscrit where inscritStatut.idStatut = 2';
+        $sql = 'SELECT inscrit.id, inscrit.civilite, inscrit.nom,  inscrit.prenom, inscrit.mail, inscrit.numTelephone, inscrit.montant, inscrit.dateInscription, (year(CURRENT_DATE()) - inscrit.anneeNaissance) as age from inscrit inner join inscritStatut on inscrit.id = inscritStatut.idInscrit where inscritStatut.idStatut = 2 group by inscrit.mail, inscrit.id, inscrit.civilite, inscrit.nom,  inscrit.prenom, inscrit.numTelephone, inscrit.montant, inscrit.dateInscription';
+        $donateurs = $this->executerRequete($sql);
+       
+        return $donateurs;
+    }
+//     public function getInscritDonateurs()
+// {
+//     $sqlDonateurs = 'SELECT inscrit.id, inscrit.civilite, inscrit.nom, inscrit.prenom, inscrit.mail, inscrit.numTelephone, inscrit.montant, inscrit.dateInscription, (YEAR(CURRENT_DATE()) - inscrit.anneeNaissance) AS age FROM inscrit INNER JOIN inscritStatut ON inscrit.id = inscritStatut.idInscrit WHERE inscritStatut.idStatut = 2';
+
+//     $sqlEmailsMultiples = 'SELECT inscrit.mail, COUNT(inscrit.mail) AS occurrences FROM inscrit INNER JOIN inscritStatut ON inscrit.id = inscritStatut.idInscrit WHERE inscritStatut.idStatut = 2 GROUP BY inscrit.mail HAVING COUNT(*) > 1';
+
+//     $donateurs = $this->executerRequete($sqlDonateurs);
+//     $emailsMultiples = $this->executerRequete($sqlEmailsMultiples);
+
+//     return [
+//         'donateurs' => $donateurs,
+//         'emailsMultiples' => $emailsMultiples
+//     ];
+// }
+    public function getInscritDonateursAjout()
+    {
+        $sql = 'SELECT inscrit.id, inscrit.civilite, inscrit.nom,  inscrit.prenom, inscrit.mail, inscrit.numTelephone, inscrit.montant, inscrit.dateInscription, (year(CURRENT_DATE()) - inscrit.anneeNaissance) as age from inscrit inner join inscritStatut on inscrit.id = inscritStatut.idInscrit where inscritStatut.idStatut = 2 group by inscrit.mail, inscrit.id, inscrit.civilite, inscrit.nom,  inscrit.prenom, inscrit.numTelephone, inscrit.montant, inscrit.dateInscription';
         $donateurs = $this->executerRequete($sql);
         return $donateurs;
     }
     public function getInscritBenevoles()
     {
-        $sql = 'SELECT mission.titre, inscrit.id, inscrit.civilite, inscrit.nom, inscrit.dateInscription, inscrit.prenom, inscrit.numTelephone, inscrit.mail, datediff(inscrit.dateInscription, "1901-01-01") as dateInscrit , (year(CURRENT_DATE()) - inscrit.anneeNaissance) as age 
+        $sql = 'SELECT mission.titre, inscrit.id, inscrit.civilite, inscrit.nom, inscrit.dateInscription, inscrit.commentaire, inscrit.prenom, inscrit.numTelephone, inscrit.mail, datediff(inscrit.dateInscription, "1901-01-01") as dateInscrit , (year(CURRENT_DATE()) - inscrit.anneeNaissance) as age 
         FROM inscrit 
         INNER JOIN inscritStatut ON inscrit.id = inscritStatut.idInscrit 
         LEFT JOIN mission ON inscritStatut.idMission = mission.idMission 
@@ -29,13 +50,13 @@ class Inscrit extends Modele
     }
     public function getMissionsInscrit($idMission)
     {
-        $sql = 'select mission.titre, mission.annonce, mission.adresse, mission.codePostal, mission.ville, inscrit.id, inscrit.civilite, inscrit.dateInscription,  (year(CURRENT_DATE()) - inscrit.anneeNaissance) as age, inscrit.nom, inscrit.prenom, inscrit.mail from mission inner join inscritStatut on mission.idMission = inscritStatut.idMission inner join inscrit on inscritStatut.idInscrit = inscrit.id where mission.idMission = ?';
+        $sql = 'select mission.titre, mission.annonce, mission.adresse, mission.codePostal, mission.ville, inscrit.id, inscrit.commentaire, inscrit.civilite, inscrit.dateInscription,  (year(CURRENT_DATE()) - inscrit.anneeNaissance) as age, inscrit.nom, inscrit.prenom, inscrit.mail from mission inner join inscritStatut on mission.idMission = inscritStatut.idMission inner join inscrit on inscritStatut.idInscrit = inscrit.id where mission.idMission = ?';
         $missions = $this->executerRequete($sql, array($idMission));
         return $missions;
     }
     public function getInscritNewsletters()
     {
-        $sql = 'SELECT inscrit.id, inscrit.civilite, inscrit.nom, inscrit.dateInscription, inscrit.prenom, inscrit.mail, (year(CURRENT_DATE()) - inscrit.anneeNaissance) as age from inscrit inner join inscritStatut on inscrit.id = inscritStatut.idInscrit where inscritStatut.idStatut = 3';
+        $sql = 'SELECT inscrit.id, inscrit.civilite, inscrit.nom, inscrit.dateInscription, inscrit.numTelephone, inscrit.prenom, inscrit.mail, (year(CURRENT_DATE()) - inscrit.anneeNaissance) as age from inscrit inner join inscritStatut on inscrit.id = inscritStatut.idInscrit where inscritStatut.idStatut = 3';
         $newsletters = $this->executerRequete($sql);
         return $newsletters;
     }

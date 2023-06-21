@@ -168,8 +168,7 @@ public function ajouterSalarie($nom, $prenom, $mail, $pole, $statut)
     $idSalarie = $nbSalaries +1;
     $this->executerRequete($sql, array($idSalarie, $nom, $prenom, $mail, $pole, $statut));
    
-    //$apiKey = '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';
-    //$apiKey = "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";
+
     $apiKey = "--";
     $email = new SendGrid\Mail\Mail(); 
     $email->setFrom("noasillam@gmail.com");
